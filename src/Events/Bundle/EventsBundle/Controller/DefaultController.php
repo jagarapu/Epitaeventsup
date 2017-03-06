@@ -12,9 +12,6 @@ use Events\Bundle\EventsBundle\Entity\Subscribed;
 use Events\Bundle\EventsBundle\Form\Type\EventoneType;
 use Events\Bundle\EventsBundle\Form\Type\EventtwoType;
 use Events\Bundle\EventsBundle\Form\Type\EventthreeType;
-use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpFoundation\RedirectResponse;
-use Symfony\Component\Filesystem\Filesystem;
 
 class DefaultController extends Controller {
 
@@ -24,7 +21,7 @@ class DefaultController extends Controller {
      */
     public function indexAction() {
 
-               // return new RedirectResponse($this->generateUrl('closepage'));
+        // return new RedirectResponse($this->generateUrl('closepage'));
         if ($this->get('security.context')->isGranted('ROLE_USER')) {
             return $this->redirect($this->generateUrl('securedhome'));
         }
@@ -80,7 +77,7 @@ class DefaultController extends Controller {
      */
     public function homeAction(Request $request) {
 
-       // return new RedirectResponse($this->generateUrl('closepage'));
+        // return new RedirectResponse($this->generateUrl('closepage'));
 
         $em = $this->getDoctrine()->getManager();
 
@@ -110,99 +107,44 @@ class DefaultController extends Controller {
         $em = $this->getDoctrine()->getManager();
         $user = $em->getRepository('EventsEventsBundle:User')->find($this->get('security.context')->getToken()->getUser()->getId());
 
-
         if (!is_object($user) || !$user instanceof User) {
             throw new \Symfony\Component\HttpFoundation\File\Exception\AccessDeniedException('This user does not have access to this section.');
         }
 
         $subrecord = $em->getRepository('EventsEventsBundle:Subscribed')->findOneBy(array('user' => $user->getId()));
 
+        $event1 = $event2 = $event3 = '';
         if (!empty($subrecord)) {
             $exists = true;
             if ($subrecord->getEventtype1() != null || $subrecord->getEventtype1() != '') {
                 $event1 = $subrecord->getEventtype1()->getId();
-            } else {
-                $event1 = '';
             }
             if (($subrecord->getEventtype2() != null || $subrecord->getEventtype2() != '')) {
                 $event2 = $subrecord->getEventtype2()->getId();
-            } else {
-                $event2 = '';
             }
             if (($subrecord->getEventtype3() != null || $subrecord->getEventtype3() != '')) {
                 $event3 = $subrecord->getEventtype3()->getId();
-            } else {
-                $event3 = '';
-            }
-            if (($subrecord->getEventtype4() != null || $subrecord->getEventtype4() != '')) {
-                $event4 = $subrecord->getEventtype4()->getId();
-            } else {
-                $event4 = '';
             }
         }
 
         $subscribed = new Subscribed();
-
         $form = $this->createForm(new EventoneType($subrecord), $subscribed);
-
         $form->handleRequest($request);
 
         if ($form->isSubmitted()) {
-            //First check the value entered by the user
-            if ($subscribed->getEventtype1() == 1 ||
-                    $subscribed->getEventtype2() == 3 ||
-                    $subscribed->getEventtype3() == 8 ||
-                    $subscribed->getEventtype4() == 11
+
+            if ($subscribed->getEventtype1() == null ||
+                    $subscribed->getEventtype2() == null ||
+                    $subscribed->getEventtype3() == null
             ) {
-                if (($subscribed->getEventtype1() == 1 && $subscribed->getEventtype2() == 3) ||
-                        ($subscribed->getEventtype1() == 1 && $subscribed->getEventtype3() == 8) ||
-                        ($subscribed->getEventtype1() == 1 && $subscribed->getEventtype4() == 11) ||
-                        ($subscribed->getEventtype2() == 3 && $subscribed->getEventtype3() == 8) ||
-                        ($subscribed->getEventtype2() == 3 && $subscribed->getEventtype4() == 11) ||
-                        ($subscribed->getEventtype3() == 8 && $subscribed->getEventtype4() == 11)) {
-                    $this->container->get('session')->getFlashBag()->add('error', 'You can select to attend ONLY ONE Cultural Shock session"');
-                    return array('form' => $form->createView());
-                }
-            } else {
-                //User must select atleast 1 Cultural Shock Session
                 //User did not choose both the events
-                $this->container->get('session')->getFlashBag()->add('error', 'You must choose ANY ONE Cultural shock session"');
+                $this->container->get('session')->getFlashBag()->add('error', 'Oh oh! It is mandatory to choose an option for all the events');
                 return array('form' => $form->createView());
             }
-
-            //Identical events should not be selected
-            if ($subscribed->getEventtype1() == 2 ||
-                    $subscribed->getEventtype2() == 4 ||
-                    $subscribed->getEventtype3() == 5 ||
-                    $subscribed->getEventtype3() == 6 ||
-                    $subscribed->getEventtype3() == 7 ||
-                    $subscribed->getEventtype4() == 9 ||
-                    $subscribed->getEventtype4() == 10
-            ) {
-                //Check for more than 2 options selected by user
-                if (($subscribed->getEventtype1() != null &&
-                        $subscribed->getEventtype2() != null &&
-                        $subscribed->getEventtype3() != null ) ||
-                        ($subscribed->getEventtype1() != null &&
-                        $subscribed->getEventtype3() != null &&
-                        $subscribed->getEventtype4() != null ) ||
-                        ($subscribed->getEventtype2() != null &&
-                        $subscribed->getEventtype3() != null &&
-                        $subscribed->getEventtype4() != null )
-                ) {
-                    $this->container->get('session')->getFlashBag()->add('error', 'You must choose to attend only two events .ANY ONE University presentation and ANY ONE Cultural Schock Session');
-                    return array('form' => $form->createView());
-                }
-            } else {
-                //User chose identical events
-                $this->container->get('session')->getFlashBag()->add('error', 'You must choose to attend ANY ONE University presentation');
-                return array('form' => $form->createView());
-            }
-
 
             $maxculture1 = $this->container->getParameter('max_cultural1');
             $maxculture2 = $this->container->getParameter('max_cultural2');
-            $maxuniversity = $this->container->getParameter('max_university');
+            $maxculture3 = $this->container->getParameter('max_cultural3');
             //Now check for the participants limit
             $qb1 = $em->createQueryBuilder();
             $qb1->select('count(subscribed.id)');
@@ -213,36 +155,17 @@ class DefaultController extends Controller {
             $total1 = $qb1->getQuery()->getSingleScalarResult();
 
             if ($exists) {
-                if ($subscribed->getEventtype1() == 1) {
-                    //Do cultural shock 1 count
-                    if ($event1 != $subscribed->getEventtype1()) {
-                        if ($total1 > $maxculture1 || $total1 == $maxculture1) {
-                            $this->container->get('session')->getFlashBag()->add('error', 'The registrations are full for this Cultural Shock Event. Please choose another time slot for the Culture Schock Event');
-                            return array('form' => $form->createView());
-                        }
-                    }
-                } else if ($subscribed->getEventtype1() == 2) {
-                    //Do university check
-                    if ($event1 != $subscribed->getEventtype1()) {
-                        if ($total1 > $maxuniversity || $total1 == $maxuniversity) {
-                            $this->container->get('session')->getFlashBag()->add('error', 'The registrations are full for this University Presentation. Please choose another University Presentation Event');
-                            return array('form' => $form->createView());
-                        }
+                //Do count check only if event is different one for already registered users
+                if ($event1 != $subscribed->getEventtype1()) {
+                    if ($total1 > $maxculture1 || $total1 == $maxculture1) {
+                        $this->container->get('session')->getFlashBag()->add('error', 'The registrations are full for the "Expatriation & Intercultural Management event". Please choose another time slot for this event');
+                        return array('form' => $form->createView());
                     }
                 }
             } else {
-                if ($subscribed->getEventtype1() == 1) {
-                    //Cultural Schock
-                    if ($total1 > $maxculture1 || $total1 == $maxculture1) {
-                        $this->container->get('session')->getFlashBag()->add('error', 'The registrations are full for this Cultural Shock Event. Please choose another time slot for the Culture Schock Event');
-                        return array('form' => $form->createView());
-                    }
-                } else if ($subscribed->getEventtype1() == 2) {
-                    //university event
-                    if ($total1 > $maxuniversity || $total1 == $maxuniversity) {
-                        $this->container->get('session')->getFlashBag()->add('error', 'The registrations are full for this University Presentation. Please choose another University Presentation Event');
-                        return array('form' => $form->createView());
-                    }
+                if ($total1 > $maxculture1 || $total1 == $maxculture1) {
+                    $this->container->get('session')->getFlashBag()->add('error', 'The registrations are full for the "Expatriation & Intercultural Management event". Please choose another time slot for this event');
+                    return array('form' => $form->createView());
                 }
             }
 
@@ -253,37 +176,19 @@ class DefaultController extends Controller {
             $qb2->setParameter('bar', $subscribed->getEventtype2());
 
             $total2 = $qb2->getQuery()->getSingleScalarResult();
+
             if ($exists) {
-                if ($subscribed->getEventtype2() == 3) {
-                    //Culture Schock Event
-                    if ($event2 != $subscribed->getEventtype2()) {
-                        if ($total2 > $maxculture1 || $total2 == $maxculture1) {
-                            $this->container->get('session')->getFlashBag()->add('error', 'The registrations are full for this Cultural Shock Event. Please choose another time slot for the Culture Schock Event');
-                            return array('form' => $form->createView());
-                        }
-                    }
-                } else if ($subscribed->getEventtype2() == 4) {
-                    //Univeristy Event
-                    if ($event2 != $subscribed->getEventtype2()) {
-                        if ($total2 > $maxuniversity || $total2 == $maxuniversity) {
-                            $this->container->get('session')->getFlashBag()->add('error', 'The registrations are full for this University Presentation. Please choose another');
-                            return array('form' => $form->createView());
-                        }
+                //Do count check only if event is different one for already registered users
+                if ($event2 != $subscribed->getEventtype2()) {
+                    if ($total2 > $maxculture2 || $total2 == $maxculture2) {
+                        $this->container->get('session')->getFlashBag()->add('error', 'The registrations are full for the selected "Food tasting Event". Please choose another time slot for this Event');
+                        return array('form' => $form->createView());
                     }
                 }
             } else {
-                if ($subscribed->getEventtype2() == 3) {
-                    //Culture Shock
-                    if ($total2 > $maxculture1 || $total2 == $maxculture1) {
-                        $this->container->get('session')->getFlashBag()->add('error', 'The registrations are full for the selected Cultural Schock Session. Please choose another Cultural Shock event');
-                        return array('form' => $form->createView());
-                    }
-                } else if ($subscribed->getEventtype2() == 4) {
-                    //University
-                    if ($total2 > $maxuniversity || $total2 == $maxuniversity) {
-                        $this->container->get('session')->getFlashBag()->add('error', 'The registrations are full for the selected University Presentation. Please choose another University Presentation event');
-                        return array('form' => $form->createView());
-                    }
+                if ($total2 > $maxculture2 || $total2 == $maxculture2) {
+                    $this->container->get('session')->getFlashBag()->add('error', 'The registrations are full for the selected "Food tasting Event". Please choose another time slot for this Event');
+                    return array('form' => $form->createView());
                 }
             }
 
@@ -296,40 +201,104 @@ class DefaultController extends Controller {
             $total3 = $qb3->getQuery()->getSingleScalarResult();
 
             if ($exists) {
-                if ($subscribed->getEventtype3() == 8) {
-                    //Culture Shock
-                    if ($event3 != $subscribed->getEventtype3()) {
-                        if ($total3 > $maxculture2 || $total3 == $maxculture2) {
-                            $this->container->get('session')->getFlashBag()->add('error', 'The registrations are full for the selected Cultural Shock Event.Please choose another Cultural Shock event');
-                            return array('form' => $form->createView());
-                        }
-                    }
-                } else {
-                    //Other university events
-                    if ($event3 != $subscribed->getEventtype3()) {
-                        if ($total3 > $maxuniversity || $total3 == $maxuniversity) {
-                            $this->container->get('session')->getFlashBag()->add('error', 'The registrations are full for the selected University Presentation Event.Please choose another event');
-                            return array('form' => $form->createView());
-                        }
+                //Do count check only if event is different one for already registered users
+                if ($event3 != $subscribed->getEventtype3()) {
+                    if ($total3 > $maxculture3 || $total3 == $maxculture3) {
+                        $this->container->get('session')->getFlashBag()->add('error', 'The registrations are full for the selected "cultural activity". Please choose another event for time 3-4pm'
+                                . '');
+                        return array('form' => $form->createView());
                     }
                 }
             } else {
-
-                if ($subscribed->getEventtype3() == 8) {
-                    //Culture Shock
-                    if ($total3 > $maxculture2 || $total3 == $maxculture2) {
-                        $this->container->get('session')->getFlashBag()->add('error', 'The registrations are full for the selected Cultural Shock Event.Please choose another Cultural Shock event');
-                        return array('form' => $form->createView());
-                    }
-                } else {
-                    //University
-                    if ($total3 > $maxuniversity || $total3 == $maxuniversity) {
-                        $this->container->get('session')->getFlashBag()->add('error', 'The registrations are full for the selected University Presentation Event.Please choose another University Presentation');
-                        return array('form' => $form->createView());
-                    }
+                if ($total3 > $maxculture3 || $total3 == $maxculture3) {
+                    $this->container->get('session')->getFlashBag()->add('error', 'The registrations are full for the selected "cultural activity". Please choose another event for time 3-4pm');
+                    return array('form' => $form->createView());
                 }
             }
-            
+        }
+
+        if ($form->isValid()) {
+
+            $sub = $em->getRepository('EventsEventsBundle:Subscribed')->findOneBy(array('user' => $user->getId()));
+            $eventtype1 = $em->getRepository('EventsEventsBundle:Eventtype')->findOneBy(array('id' => $subscribed->getEventtype1()));
+            $eventtype2 = $em->getRepository('EventsEventsBundle:Eventtype')->findOneBy(array('id' => $subscribed->getEventtype2()));
+            $eventtype3 = $em->getRepository('EventsEventsBundle:Eventtype')->findOneBy(array('id' => $subscribed->getEventtype3()));
+
+            if (empty($sub)) {
+                $subscribed->setUser($user);
+                $subscribed->setEventtype1($eventtype1);
+                $subscribed->setEventtype2($eventtype2);
+                $subscribed->setEventtype3($eventtype3);
+                $em->persist($subscribed);
+                $copy = $subscribed;
+            } else {
+                $sub->setEventtype1($eventtype1);
+                $sub->setEventtype2($eventtype2);
+                $sub->setEventtype3($eventtype3);
+                $em->persist($sub);
+                $copy = $sub;
+            }
+            $em->flush();
+            $route = 'securedhome';
+            $url = $this->generateUrl($route);
+            $this->container->get('session')->getFlashBag()->add('success', 'We have your registrations for the events on Tuesday 14th March 2017. Thank you!');
+            $message = \Swift_Message::newInstance()
+                    ->setSubject('EPITA International - Your Registrations for Tuesday, 14th March 2017')
+                    ->setFrom('epitaevents2017@gmail.com')
+                    ->setTo($user->getEmailCanonical())
+                    ->setContentType("text/html")
+                    ->setBody(
+                    $this->renderView('EventsEventsBundle:Default:tuesdaymail.html.twig', array('row' => $copy)
+            ));
+            $this->get('mailer')->send($message);
+            return $this->redirect($url);
+        }
+
+        return array('form' => $form->createView());
+    }
+
+    /**
+     * @Route("/secured/eventtwo",name="eventtwo")
+     * @Template()
+     */
+    public function eventtwoAction(Request $request) {
+
+        $exists = false;
+
+        if (!$this->get('security.context')->isGranted('ROLE_USER')) {
+            return $this->redirect($this->generateUrl('events_events_default_index'));
+        }
+        $em = $this->getDoctrine()->getManager();
+        $user = $em->getRepository('EventsEventsBundle:User')->find($this->get('security.context')->getToken()->getUser()->getId());
+
+        if (!is_object($user) || !$user instanceof User) {
+            throw new \Symfony\Component\HttpFoundation\File\Exception\AccessDeniedException('This user does not have access to this section.');
+        }
+
+        $subrecord = $em->getRepository('EventsEventsBundle:Subscribed')->findOneBy(array('user' => $user->getId()));
+
+        $event4 = '';
+        if (!empty($subrecord)) {
+            $exists = true;
+            if ($subrecord->getEventtype4() != null || $subrecord->getEventtype4() != '') {
+                $event4 = $subrecord->getEventtype4()->getId();
+            }
+        }
+
+        $subscribed = new Subscribed();
+        $form = $this->createForm(new EventtwoType($subrecord), $subscribed);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted()) {
+
+            if ($subscribed->getEventtype4() == null) {
+                //User did not choose both the events
+                $this->container->get('session')->getFlashBag()->add('error', 'Oh oh! It is mandatory to choose an event to attend during the day');
+                return array('form' => $form->createView());
+            }
+
+            $maxculture4 = $this->container->getParameter('max_cultural4');
+            //Now check for the participants limit
             $qb4 = $em->createQueryBuilder();
             $qb4->select('count(subscribed.id)');
             $qb4->from('EventsEventsBundle:Subscribed', 'subscribed');
@@ -339,62 +308,33 @@ class DefaultController extends Controller {
             $total4 = $qb4->getQuery()->getSingleScalarResult();
 
             if ($exists) {
-                if ($subscribed->getEventtype4() == 11) {
-                    //Culture Shock
-                    if ($event4 != $subscribed->getEventtype4()) {
-                        if ($total4 > $maxculture2 || $total4 == $maxculture2) {
-                            $this->container->get('session')->getFlashBag()->add('error', 'The registrations are full for the selected Cultural Shock Event.Please choose another Cultural Shock event');
-                            return array('form' => $form->createView());
-                        }
-                    }
-                } else {
-                    //Other university events
-                    if ($event4 != $subscribed->getEventtype4()) {
-                        if ($total4 > $maxuniversity || $total4 == $maxuniversity) {
-                            $this->container->get('session')->getFlashBag()->add('error', 'The registrations are full for the selected University Presentation Event.Please choose another event');
-                            return array('form' => $form->createView());
-                        }
+                //Do count check only if event is different one for already registered users
+                if ($event4 != $subscribed->getEventtype4()) {
+                    if ($total4 > $maxculture4 || $total4 == $maxculture4) {
+                        $this->container->get('session')->getFlashBag()->add('error', 'The registrations are full for the "selected event". Please choose another event');
+                        return array('form' => $form->createView());
                     }
                 }
             } else {
-
-                if ($subscribed->getEventtype4() == 11) {
-                    //Culture Shock
-                    if ($total4 > $maxculture2 || $total4 == $maxculture2) {
-                        $this->container->get('session')->getFlashBag()->add('error', 'The registrations are full for the selected Cultural Shock Event.Please choose another Cultural Shock event');
-                        return array('form' => $form->createView());
-                    }
-                } else {
-                    //University
-                    if ($total4 > $maxuniversity || $total4 == $maxuniversity) {
-                        $this->container->get('session')->getFlashBag()->add('error', 'The registrations are full for the selected University Presentation Event.Please choose another University Presentation');
-                        return array('form' => $form->createView());
-                    }
+                if ($total4 > $maxculture4 || $total4 == $maxculture4) {
+                    $this->container->get('session')->getFlashBag()->add('error', 'The registrations are full for the "selected event". Please choose another event');
+                    return array('form' => $form->createView());
                 }
             }
         }
 
-
         if ($form->isValid()) {
 
             $sub = $em->getRepository('EventsEventsBundle:Subscribed')->findOneBy(array('user' => $user->getId()));
-            $eventtype1 = $em->getRepository('EventsEventsBundle:Eventtype')->findOneBy(array('id' => $subscribed->getEventtype1()));
-            $eventtype2 = $em->getRepository('EventsEventsBundle:Eventtype')->findOneBy(array('id' => $subscribed->getEventtype2()));
-            $eventtype3 = $em->getRepository('EventsEventsBundle:Eventtype')->findOneBy(array('id' => $subscribed->getEventtype3()));
             $eventtype4 = $em->getRepository('EventsEventsBundle:Eventtype')->findOneBy(array('id' => $subscribed->getEventtype4()));
+
 
             if (empty($sub)) {
                 $subscribed->setUser($user);
-                $subscribed->setEventtype1($eventtype1);
-                $subscribed->setEventtype2($eventtype2);
-                $subscribed->setEventtype3($eventtype3);
                 $subscribed->setEventtype4($eventtype4);
                 $em->persist($subscribed);
                 $copy = $subscribed;
             } else {
-                $sub->setEventtype1($eventtype1);
-                $sub->setEventtype2($eventtype2);
-                $sub->setEventtype3($eventtype3);
                 $sub->setEventtype4($eventtype4);
                 $em->persist($sub);
                 $copy = $sub;
@@ -402,15 +342,218 @@ class DefaultController extends Controller {
             $em->flush();
             $route = 'securedhome';
             $url = $this->generateUrl($route);
-            $this->container->get('session')->getFlashBag()->add('success', 'We have your registrations for the events on Wednesday and Thursday. Thank you!');
+            $this->container->get('session')->getFlashBag()->add('success', 'We have your registrations for the events on Wednesday, 15th March 2017 . Thank you!');
             $message = \Swift_Message::newInstance()
-                    ->setSubject('EPITA International - Your Registrations for Thursday, 24th March and Friday 25th March 2016')
-                    ->setFrom('epitaevents2016@gmail.com')
+                    ->setSubject('EPITA International - Your Registrations for Wednesday, 15th March 2017')
+                    ->setFrom('epitaevents2017@gmail.com')
                     ->setTo($user->getEmailCanonical())
                     ->setContentType("text/html")
                     ->setBody(
                     $this->renderView('EventsEventsBundle:Default:wednesdaymail.html.twig', array('row' => $copy)
-                    ));
+            ));
+            $this->get('mailer')->send($message);
+            return $this->redirect($url);
+        }
+        return array('form' => $form->createView());
+    }
+
+    /**
+     * @Route("/secured/eventthree",name="eventthree")
+     * @Template()
+     */
+    public function eventthreeAction(Request $request) {
+
+        $exists = false;
+
+        if (!$this->get('security.context')->isGranted('ROLE_USER')) {
+            return $this->redirect($this->generateUrl('events_events_default_index'));
+        }
+        $em = $this->getDoctrine()->getManager();
+        $user = $em->getRepository('EventsEventsBundle:User')->find($this->get('security.context')->getToken()->getUser()->getId());
+
+        if (!is_object($user) || !$user instanceof User) {
+            throw new \Symfony\Component\HttpFoundation\File\Exception\AccessDeniedException('This user does not have access to this section.');
+        }
+
+        $subrecord = $em->getRepository('EventsEventsBundle:Subscribed')->findOneBy(array('user' => $user->getId()));
+
+        $event5 = $event6 = $event7 = '';
+        if (!empty($subrecord)) {
+            $exists = true;
+            if ($subrecord->getEventtype5() != null || $subrecord->getEventtype5() != '') {
+                $event5 = $subrecord->getEventtype5()->getId();
+            }
+            if (($subrecord->getEventtype6() != null || $subrecord->getEventtype6() != '')) {
+                $event6 = $subrecord->getEventtype6()->getId();
+            }
+            if (($subrecord->getEventtype7() != null || $subrecord->getEventtype7() != '')) {
+                $event7 = $subrecord->getEventtype7()->getId();
+            }
+        }
+
+        $subscribed = new Subscribed();
+        $form = $this->createForm(new EventthreeType($subrecord), $subscribed);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted()) {
+
+            if ($subscribed->getEventtype5() == null ||
+                    $subscribed->getEventtype6() == null ||
+                    $subscribed->getEventtype7() == null
+            ) {
+                //User did not choose both the events
+                $this->container->get('session')->getFlashBag()->add('error', 'Oh oh! It is mandatory to choose an option for all the events');
+                return array('form' => $form->createView());
+            }
+
+            $maxculture5 = $this->container->getParameter('max_cultural5'); //125
+            $maxviecv = $this->container->getParameter('max_vie_cv'); //120
+            $maxdual = $this->container->getParameter('max_dual'); //90
+            //Now check for the participants limit
+            $qb5 = $em->createQueryBuilder();
+            $qb5->select('count(subscribed.id)');
+            $qb5->from('EventsEventsBundle:Subscribed', 'subscribed');
+            $qb5->where('subscribed.eventtype5 = :bar');
+            $qb5->setParameter('bar', $subscribed->getEventtype5());
+
+            $total5 = $qb5->getQuery()->getSingleScalarResult();
+
+            if ($exists) {
+                //Do count check only if event is different one for already registered users
+                if ($event5 != $subscribed->getEventtype5()) {
+                    if ($total5 > $maxculture5 || $total5 == $maxculture5) {
+                        $this->container->get('session')->getFlashBag()->add('error', 'The registrations are full for the "selected event". Please choose another time slot for this event');
+                        return array('form' => $form->createView());
+                    }
+                }
+            } else {
+                if ($total5 > $maxculture5 || $total5 == $maxculture5) {
+                    $this->container->get('session')->getFlashBag()->add('error', 'The registrations are full for the "Event 1(10:30 - 12:00)". Please choose another time slot for this event');
+                    return array('form' => $form->createView());
+                }
+            }
+
+            //Now check for the participants limit
+            $qb6 = $em->createQueryBuilder();
+            $qb6->select('count(subscribed.id)');
+            $qb6->from('EventsEventsBundle:Subscribed', 'subscribed');
+            $qb6->where('subscribed.eventtype6 = :bar');
+            $qb6->setParameter('bar', $subscribed->getEventtype6());
+
+            $total6 = $qb6->getQuery()->getSingleScalarResult();
+
+            if ($exists) {
+                if ($subscribed->getEventtype6() == 19) {
+                    //Do cultural shock 1 count
+                    if ($event6 != $subscribed->getEventtype6()) {
+                        if ($total6 > $maxviecv || $total6 == $maxviecv) {
+                            $this->container->get('session')->getFlashBag()->add('error', 'The registrations are full for "selected event". Please choose another Event');
+                            return array('form' => $form->createView());
+                        }
+                    }
+                } else if ($subscribed->getEventtype6() == 20 || $subscribed->getEventtype6() == 21) {
+                    //Do university check
+                    if ($event6 != $subscribed->getEventtype6()) {
+                        if ($total6 > $maxdual || $total6 == $maxdual) {
+                            $this->container->get('session')->getFlashBag()->add('error', 'The registrations are full for "Event 2(2:30pm - 4pm)". Please choose another Event');
+                            return array('form' => $form->createView());
+                        }
+                    }
+                }
+            } else {
+                if ($subscribed->getEventtype6() == 19) {
+                    //Cultural Schock
+                    if ($total6 > $maxviecv || $total6 == $maxviecv) {
+                        $this->container->get('session')->getFlashBag()->add('error', 'The registrations are full for "selected event". Please choose another Event');
+                        return array('form' => $form->createView());
+                    }
+                } else if ($subscribed->getEventtype6() == 20 || $subscribed->getEventtype6() == 21) {
+                    //university event
+                    if ($total6 > $maxdual || $total6 == $maxdual) {
+                        $this->container->get('session')->getFlashBag()->add('error', 'The registrations are full for "Event 2(2:30pm - 4pm)". Please choose another Event');
+                        return array('form' => $form->createView());
+                    }
+                }
+            }
+
+
+            //Now check for the participants limit
+            $qb7 = $em->createQueryBuilder();
+            $qb7->select('count(subscribed.id)');
+            $qb7->from('EventsEventsBundle:Subscribed', 'subscribed');
+            $qb7->where('subscribed.eventtype7 = :bar');
+            $qb7->setParameter('bar', $subscribed->getEventtype7());
+
+            $total7 = $qb7->getQuery()->getSingleScalarResult();
+
+            if ($exists) {
+                if ($subscribed->getEventtype7() == 22) {
+                    //Do cultural shock 1 count
+                    if ($event7 != $subscribed->getEventtype7()) {
+                        if ($total7 > $maxviecv || $total7 == $maxviecv) {
+                            $this->container->get('session')->getFlashBag()->add('error', 'The registrations are full for "selected event". Please choose another Event');
+                            return array('form' => $form->createView());
+                        }
+                    }
+                } else if ($subscribed->getEventtype7() == 23 || $subscribed->getEventtype7() == 24) {
+                    //Do university check
+                    if ($event7 != $subscribed->getEventtype7()) {
+                        if ($total7 > $maxdual || $total7 == $maxdual) {
+                            $this->container->get('session')->getFlashBag()->add('error', 'The registrations are full for "Event 3(4pm - 5pm)". Please choose another Event');
+                            return array('form' => $form->createView());
+                        }
+                    }
+                }
+            } else {
+                if ($subscribed->getEventtype7() == 22) {
+                    //Cultural Schock
+                    if ($total7 > $maxviecv || $total7 == $maxviecv) {
+                        $this->container->get('session')->getFlashBag()->add('error', 'The registrations are full for "selected event". Please choose another Event');
+                        return array('form' => $form->createView());
+                    }
+                } else if ($subscribed->getEventtype7() == 23 || $subscribed->getEventtype7() == 24) {
+                    //university event
+                    if ($total7 > $maxdual || $total7 == $maxdual) {
+                        $this->container->get('session')->getFlashBag()->add('error', 'The registrations are full for "Event 3(4pm - 5pm)". Please choose another Event');
+                        return array('form' => $form->createView());
+                    }
+                }
+            }
+        }
+
+        if ($form->isValid()) {
+
+            $sub = $em->getRepository('EventsEventsBundle:Subscribed')->findOneBy(array('user' => $user->getId()));
+            $eventtype5 = $em->getRepository('EventsEventsBundle:Eventtype')->findOneBy(array('id' => $subscribed->getEventtype5()));
+            $eventtype6 = $em->getRepository('EventsEventsBundle:Eventtype')->findOneBy(array('id' => $subscribed->getEventtype6()));
+            $eventtype7 = $em->getRepository('EventsEventsBundle:Eventtype')->findOneBy(array('id' => $subscribed->getEventtype7()));
+
+            if (empty($sub)) {
+                $subscribed->setUser($user);
+                $subscribed->setEventtype5($eventtype5);
+                $subscribed->setEventtype6($eventtype6);
+                $subscribed->setEventtype7($eventtype7);
+                $em->persist($subscribed);
+                $copy = $subscribed;
+            } else {
+                $sub->setEventtype5($eventtype5);
+                $sub->setEventtype6($eventtype6);
+                $sub->setEventtype7($eventtype7);
+                $em->persist($sub);
+                $copy = $sub;
+            }
+            $em->flush();
+            $route = 'securedhome';
+            $url = $this->generateUrl($route);
+            $this->container->get('session')->getFlashBag()->add('success', 'We have your registrations for the events on Thursday, 16th March 2017. Thank you!');
+            $message = \Swift_Message::newInstance()
+                    ->setSubject('EPITA International - Your Registrations for Thursday, 16th March 2017')
+                    ->setFrom('epitaevents2017@gmail.com')
+                    ->setTo($user->getEmailCanonical())
+                    ->setContentType("text/html")
+                    ->setBody(
+                    $this->renderView('EventsEventsBundle:Default:Thursdaymail.html.twig', array('row' => $copy)
+            ));
             $this->get('mailer')->send($message);
             return $this->redirect($url);
         }
