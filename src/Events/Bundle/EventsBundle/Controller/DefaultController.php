@@ -552,7 +552,7 @@ class DefaultController extends Controller {
                     ->setTo($user->getEmailCanonical())
                     ->setContentType("text/html")
                     ->setBody(
-                    $this->renderView('EventsEventsBundle:Default:Thursdaymail.html.twig', array('row' => $copy)
+                    $this->renderView('EventsEventsBundle:Default:thursdaymail.html.twig', array('row' => $copy)
             ));
             $this->get('mailer')->send($message);
             return $this->redirect($url);
