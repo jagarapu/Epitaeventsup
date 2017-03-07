@@ -45,8 +45,8 @@ class EventthreeType extends AbstractType {
        }
         //Eventtype5
         $builder->add('eventtype5','choice',array(
-            'choices' => array('17' => 'Le Project Management à l’International(10:30am - 12pm)', 
-                               '18' => "L’interculturalité sans risques (10:30am - 12pm)",
+            'choices' => array('17' => 'L’interculturalité sans risques (10:30am - 12pm)', 
+                               '18' => "Le CV à l’international (10:30am - 12pm)",
                 ),
             'expanded' => true,
             'multiple' => false,
@@ -68,7 +68,7 @@ class EventthreeType extends AbstractType {
         ));
         //Eventtype7
         $builder->add('eventtype7','choice',array(
-            'choices' => array('22' => 'Le CV à l’international (4pm – 5:30pm) ', 
+            'choices' => array('22' => 'Le Project Management à l’international (4pm – 5:30pm) ', 
                                '23' => 'Dual Degree Griffith (4pm – 5pm)',
                                '24' => 'Dual Degree Boston (4pm – 5pm) ',
                 ),

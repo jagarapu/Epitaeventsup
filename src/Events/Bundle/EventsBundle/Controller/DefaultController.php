@@ -406,9 +406,9 @@ class DefaultController extends Controller {
                 return array('form' => $form->createView());
             }
 
-            $maxculture5 = $this->container->getParameter('max_cultural5'); //125
-            $maxviecv = $this->container->getParameter('max_vie_cv'); //120
-            $maxdual = $this->container->getParameter('max_dual'); //90
+            $maxculture5 = $this->container->getParameter('max_cultural5'); //110
+            $maxviecv = $this->container->getParameter('max_vie_cv'); //100
+            $maxdual = $this->container->getParameter('max_dual'); //60
             //Now check for the participants limit
             $qb5 = $em->createQueryBuilder();
             $qb5->select('count(subscribed.id)');
@@ -422,13 +422,13 @@ class DefaultController extends Controller {
                 //Do count check only if event is different one for already registered users
                 if ($event5 != $subscribed->getEventtype5()) {
                     if ($total5 > $maxculture5 || $total5 == $maxculture5) {
-                        $this->container->get('session')->getFlashBag()->add('error', 'The registrations are full for the "selected event". Please choose another time slot for this event');
+                        $this->container->get('session')->getFlashBag()->add('error', 'The registrations are full for the "selected event". Please choose another event for same time slot');
                         return array('form' => $form->createView());
                     }
                 }
             } else {
                 if ($total5 > $maxculture5 || $total5 == $maxculture5) {
-                    $this->container->get('session')->getFlashBag()->add('error', 'The registrations are full for the "Event 1(10:30 - 12:00)". Please choose another time slot for this event');
+                    $this->container->get('session')->getFlashBag()->add('error', 'The registrations are full for the "Event 1(10:30 - 12:00)". Please choose another event for same time slot');
                     return array('form' => $form->createView());
                 }
             }
@@ -455,7 +455,7 @@ class DefaultController extends Controller {
                     //Do university check
                     if ($event6 != $subscribed->getEventtype6()) {
                         if ($total6 > $maxdual || $total6 == $maxdual) {
-                            $this->container->get('session')->getFlashBag()->add('error', 'The registrations are full for "Event 2(2:30pm - 4pm)". Please choose another Event');
+                            $this->container->get('session')->getFlashBag()->add('error', 'The registrations are full for "Event 2". Please choose another Event');
                             return array('form' => $form->createView());
                         }
                     }
@@ -470,7 +470,7 @@ class DefaultController extends Controller {
                 } else if ($subscribed->getEventtype6() == 20 || $subscribed->getEventtype6() == 21) {
                     //university event
                     if ($total6 > $maxdual || $total6 == $maxdual) {
-                        $this->container->get('session')->getFlashBag()->add('error', 'The registrations are full for "Event 2(2:30pm - 4pm)". Please choose another Event');
+                        $this->container->get('session')->getFlashBag()->add('error', 'The registrations are full for "Event 2". Please choose another Event');
                         return array('form' => $form->createView());
                     }
                 }
@@ -499,7 +499,7 @@ class DefaultController extends Controller {
                     //Do university check
                     if ($event7 != $subscribed->getEventtype7()) {
                         if ($total7 > $maxdual || $total7 == $maxdual) {
-                            $this->container->get('session')->getFlashBag()->add('error', 'The registrations are full for "Event 3(4pm - 5pm)". Please choose another Event');
+                            $this->container->get('session')->getFlashBag()->add('error', 'The registrations are full for "Event 3". Please choose another Event');
                             return array('form' => $form->createView());
                         }
                     }
@@ -514,7 +514,7 @@ class DefaultController extends Controller {
                 } else if ($subscribed->getEventtype7() == 23 || $subscribed->getEventtype7() == 24) {
                     //university event
                     if ($total7 > $maxdual || $total7 == $maxdual) {
-                        $this->container->get('session')->getFlashBag()->add('error', 'The registrations are full for "Event 3(4pm - 5pm)". Please choose another Event');
+                        $this->container->get('session')->getFlashBag()->add('error', 'The registrations are full for "Event 3". Please choose another Event');
                         return array('form' => $form->createView());
                     }
                 }

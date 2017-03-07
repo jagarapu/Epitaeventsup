@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+{% form_theme form 'EventsEventsBundle:Form:fields2.html.twig' %}
 <html>
     <head>
         <meta charset="UTF-8" />
@@ -27,7 +28,8 @@
      <br>
      <form action="{{ path('eventone') }}" method="post" {{ form_enctype(form) }} name="eventone">
             <table>       
-                
+                <style>.formlabelregister{margin:30px;}
+                </style>
                     {# Event type 1 #}
                     <tr>
                         <td><div class="formlabelregister"><b>{{ form_label(form.eventtype1) }}</b></div></td>
@@ -37,11 +39,11 @@
                     <tr></tr>
                     <tr></tr>
                     <tr></tr>
-                    <tr></tr>
+                    <tr></tr>  
                     {# Event type 2 #}
                     <tr>
                         <td><div class="formlabelregister"><b>{{ form_label(form.eventtype2) }}</b></div></td>
-                        <td>{{ form_widget(form.eventtype2) }}</td>
+                        <td>{{ form_widget(form.eventtype2) }}</td>  
                         <td><span class="errors">{{ form_errors(form.eventtype2) }}</span></td>
                     </tr>                   
                     <tr></tr>
@@ -52,87 +54,16 @@
                     {# Event type 3 #}
                     <tr>
                         <td><div class="formlabelregister"><b>{{ form_label(form.eventtype3) }}</b></div></td>
-                        <td>{{ form_widget(form.eventtype3) }}</td>
+                        <td>{{ form_widget(form.eventtype3) }}</td>   
                         <td><span class="errors">{{ form_errors(form.eventtype3) }}</span></td>
                     </tr>                   
                     <tr></tr>
                     <tr></tr>
                     <tr></tr>
                     <tr></tr>             
-                    {# Event type 4 #}
-{#                    <tr>
-                        <td><div class="formlabelregister"><b>{{ form_label(form.eventtype4) }}</b></div></td>
-                        <td>{{ form_widget(form.eventtype4) }}</td>
-                        <td><span class="errors">{{ form_errors(form.eventtype4) }}</span></td>
-                    </tr>                   
-                    <tr></tr>
-                    <tr></tr>
-                    <tr></tr>
-                    <tr></tr>   #}
-                    {# Event type 5 #}
-{#                    <tr>
-                        <td><div class="formlabelregister"><b>{{ form_label(form.eventtype5) }}</b></div></td>
-                        <td>{{ form_widget(form.eventtype5) }}</td>
-                        <td><span class="errors">{{ form_errors(form.eventtype5) }}</span></td>
-                    </tr>                   
-                    <tr></tr>
-                    <tr></tr>
-                    <tr></tr>
-                    <tr></tr>  #}
-                    {# Event type 6 #}
-{#                    <tr>
-                        <td><div class="formlabelregister"><b>{{ form_label(form.eventtype6) }}</b></div></td>
-                        <td>{{ form_widget(form.eventtype6) }}</td>
-                        <td><span class="errors">{{ form_errors(form.eventtype6) }}</span></td>
-                    </tr>                   
-                    <tr></tr>
-                    <tr></tr>
-                    <tr></tr>
-                    <tr></tr>  #}
-                    {# Event type 7 #}
-                    {#<tr>
-                        <td><div class="formlabelregister"><b>{{ form_label(form.eventtype7) }}</b></div></td>
-                        <td>{{ form_widget(form.eventtype7) }}</td>
-                        <td><span class="errors">{{ form_errors(form.eventtype7) }}</span></td>
-                    </tr>                   
-                    <tr></tr>
-                    <tr></tr>
-                    <tr></tr>
-                    <tr></tr>  #}
-                   
-                 {# Event type 8 #}
-{#                    <tr>
-                        <td><div class="formlabelregister"><b>{{ form_label(form.eventtype8) }}</b></div></td>
-                        <td>{{ form_widget(form.eventtype8) }}</td>
-                        <td><span class="errors">{{ form_errors(form.eventtype8) }}</span></td>
-                    </tr>                   
-                    <tr></tr>
-                    <tr></tr>
-                    <tr></tr>
-                    <tr></tr>  
-                    {# Event type 9 #}
-  {#                  <tr>
-                        <td><div class="formlabelregister"><b>{{ form_label(form.eventtype9) }}</b></div></td>
-                        <td>{{ form_widget(form.eventtype9) }}</td>
-                        <td><span class="errors">{{ form_errors(form.eventtype9) }}</span></td>
-                    </tr>                   
-                    <tr></tr>
-                    <tr></tr>
-                    <tr></tr>
-                    <tr></tr>  
-                    {# Event type 10 #}
-  {#                  <tr>
-                        <td><div class="formlabelregister"><b>{{ form_label(form.eventtype10) }}</b></div></td>
-                        <td>{{ form_widget(form.eventtype10) }}</td>
-                        <td><span class="errors">{{ form_errors(form.eventtype10) }}</span></td>
-                    </tr>                   
-                    <tr></tr>
-                    <tr></tr>
-                    <tr></tr>
-                    <tr></tr>  #}
             </table>            
-            <table>
-                <tbody>
+            <table>   
+                <tbody>  
                     <tr>
                         <td style="padding-left: 50px;padding-top: 10px;"><input type="submit" value="Submit" id="submit"></td>
                     </tr>

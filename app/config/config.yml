@@ -80,10 +80,10 @@ swiftmailer:
     spool:     { type: memory }
     
 parameters:
-    max_cultural1 : 125
-    max_cultural2 : 125
-    max_cultural3 : 35
-    max_cultural4 : 50
-    max_cultural5 : 90
-    max_vie_cv : 120
-    max_dual : 90
+    max_cultural1 : 7 
+    max_cultural2 : 7
+    max_cultural3 : 2
+    max_cultural4 : 3
+    max_cultural5 : 6
+    max_vie_cv : 5
+    max_dual : 4
