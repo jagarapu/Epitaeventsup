@@ -12,6 +12,7 @@ use Events\Bundle\EventsBundle\Entity\Subscribed;
 use Events\Bundle\EventsBundle\Form\Type\EventoneType;
 use Events\Bundle\EventsBundle\Form\Type\EventtwoType;
 use Events\Bundle\EventsBundle\Form\Type\EventthreeType;
+use Symfony\Component\HttpFoundation\Response;
 
 class DefaultController extends Controller {
 
@@ -158,13 +159,13 @@ class DefaultController extends Controller {
                 //Do count check only if event is different one for already registered users
                 if ($event1 != $subscribed->getEventtype1()) {
                     if ($total1 > $maxculture1 || $total1 == $maxculture1) {
-                        $this->container->get('session')->getFlashBag()->add('error', 'The registrations are full for the "Expatriation & Intercultural Management event". Please choose another time slot for this event');
+                        $this->container->get('session')->getFlashBag()->add('error', 'The registrations are full for the "Expatriation and Intercultural Management event". Please choose another time slot for this event');
                         return array('form' => $form->createView());
                     }
                 }
             } else {
                 if ($total1 > $maxculture1 || $total1 == $maxculture1) {
-                    $this->container->get('session')->getFlashBag()->add('error', 'The registrations are full for the "Expatriation & Intercultural Management event". Please choose another time slot for this event');
+                    $this->container->get('session')->getFlashBag()->add('error', 'The registrations are full for the "Expatriation and Intercultural Management event". Please choose another time slot for this event');
                     return array('form' => $form->createView());
                 }
             }
@@ -204,14 +205,14 @@ class DefaultController extends Controller {
                 //Do count check only if event is different one for already registered users
                 if ($event3 != $subscribed->getEventtype3()) {
                     if ($total3 > $maxculture3 || $total3 == $maxculture3) {
-                        $this->container->get('session')->getFlashBag()->add('error', 'The registrations are full for the selected "cultural activity". Please choose another event for time 3-4pm'
+                        $this->container->get('session')->getFlashBag()->add('error', 'The registrations are full for the selected "cultural activity - Event 3". Please choose another event for time 3-4pm'
                                 . '');
                         return array('form' => $form->createView());
                     }
                 }
             } else {
                 if ($total3 > $maxculture3 || $total3 == $maxculture3) {
-                    $this->container->get('session')->getFlashBag()->add('error', 'The registrations are full for the selected "cultural activity". Please choose another event for time 3-4pm');
+                    $this->container->get('session')->getFlashBag()->add('error', 'The registrations are full for the selected "cultural activity - Event 3". Please choose another event for time 3-4pm');
                     return array('form' => $form->createView());
                 }
             }
@@ -422,7 +423,7 @@ class DefaultController extends Controller {
                 //Do count check only if event is different one for already registered users
                 if ($event5 != $subscribed->getEventtype5()) {
                     if ($total5 > $maxculture5 || $total5 == $maxculture5) {
-                        $this->container->get('session')->getFlashBag()->add('error', 'The registrations are full for the "selected event". Please choose another event for same time slot');
+                        $this->container->get('session')->getFlashBag()->add('error', 'The registrations are full for the "Event 1(10:30 - 12:00)". Please choose another event for same time slot');
                         return array('form' => $form->createView());
                     }
                 }
@@ -447,7 +448,7 @@ class DefaultController extends Controller {
                     //Do cultural shock 1 count
                     if ($event6 != $subscribed->getEventtype6()) {
                         if ($total6 > $maxviecv || $total6 == $maxviecv) {
-                            $this->container->get('session')->getFlashBag()->add('error', 'The registrations are full for "selected event". Please choose another Event');
+                            $this->container->get('session')->getFlashBag()->add('error', 'The registrations are full for the selected "Event 2". Please choose another Event');
                             return array('form' => $form->createView());
                         }
                     }
@@ -455,7 +456,7 @@ class DefaultController extends Controller {
                     //Do university check
                     if ($event6 != $subscribed->getEventtype6()) {
                         if ($total6 > $maxdual || $total6 == $maxdual) {
-                            $this->container->get('session')->getFlashBag()->add('error', 'The registrations are full for "Event 2". Please choose another Event');
+                            $this->container->get('session')->getFlashBag()->add('error', 'The registrations are full for the selected "Event 2". Please choose another Event');
                             return array('form' => $form->createView());
                         }
                     }
@@ -464,13 +465,13 @@ class DefaultController extends Controller {
                 if ($subscribed->getEventtype6() == 19) {
                     //Cultural Schock
                     if ($total6 > $maxviecv || $total6 == $maxviecv) {
-                        $this->container->get('session')->getFlashBag()->add('error', 'The registrations are full for "selected event". Please choose another Event');
+                        $this->container->get('session')->getFlashBag()->add('error', 'The registrations are full for the selected "Event 2". Please choose another Event');
                         return array('form' => $form->createView());
                     }
                 } else if ($subscribed->getEventtype6() == 20 || $subscribed->getEventtype6() == 21) {
                     //university event
                     if ($total6 > $maxdual || $total6 == $maxdual) {
-                        $this->container->get('session')->getFlashBag()->add('error', 'The registrations are full for "Event 2". Please choose another Event');
+                        $this->container->get('session')->getFlashBag()->add('error', 'The registrations are full for the selected "Event 2". Please choose another Event');
                         return array('form' => $form->createView());
                     }
                 }
@@ -491,7 +492,7 @@ class DefaultController extends Controller {
                     //Do cultural shock 1 count
                     if ($event7 != $subscribed->getEventtype7()) {
                         if ($total7 > $maxviecv || $total7 == $maxviecv) {
-                            $this->container->get('session')->getFlashBag()->add('error', 'The registrations are full for "selected event". Please choose another Event');
+                            $this->container->get('session')->getFlashBag()->add('error', 'The registrations are full for the selected "Event 3". Please choose another Event');
                             return array('form' => $form->createView());
                         }
                     }
@@ -499,7 +500,7 @@ class DefaultController extends Controller {
                     //Do university check
                     if ($event7 != $subscribed->getEventtype7()) {
                         if ($total7 > $maxdual || $total7 == $maxdual) {
-                            $this->container->get('session')->getFlashBag()->add('error', 'The registrations are full for "Event 3". Please choose another Event');
+                            $this->container->get('session')->getFlashBag()->add('error', 'The registrations are full for the selected "Event 3". Please choose another Event');
                             return array('form' => $form->createView());
                         }
                     }
@@ -508,13 +509,13 @@ class DefaultController extends Controller {
                 if ($subscribed->getEventtype7() == 22) {
                     //Cultural Schock
                     if ($total7 > $maxviecv || $total7 == $maxviecv) {
-                        $this->container->get('session')->getFlashBag()->add('error', 'The registrations are full for "selected event". Please choose another Event');
+                        $this->container->get('session')->getFlashBag()->add('error', 'The registrations are full for the selected "Event 3". Please choose another Event');
                         return array('form' => $form->createView());
                     }
                 } else if ($subscribed->getEventtype7() == 23 || $subscribed->getEventtype7() == 24) {
                     //university event
                     if ($total7 > $maxdual || $total7 == $maxdual) {
-                        $this->container->get('session')->getFlashBag()->add('error', 'The registrations are full for "Event 3". Please choose another Event');
+                        $this->container->get('session')->getFlashBag()->add('error', 'The registrations are full for the selected "Event 3". Please choose another Event');
                         return array('form' => $form->createView());
                     }
                 }
@@ -578,5 +579,64 @@ class DefaultController extends Controller {
         $token = new \Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken($user, null, $providerKey, $user->getRoles());
         $this->container->get('security.context')->setToken($token);
     }
+    
+    
+    /**
+     *
+     * @Route("/export/tuesday",name="exporttue")
+     *      
+     */
+    public function exporttueAction() {
+        $format = 'xls';
+        $filename = sprintf('export_students_tuesday.%s', $format);
+        $data = array();
+        $em = $this->getDoctrine()->getEntityManager();
+        $query = $em->createQuery('SELECT s FROM Events\Bundle\EventsBundle\Entity\Subscribed s');
+        $data = $query->getResult();
+        $content = $this->renderView('EventsEventsBundle:Default:tuesday.html.twig', array('data' => $data));
+        $response = new Response($content);
+        $response->headers->set('Content-Type', 'application/vnd.ms-excel');
+        $response->headers->set('Content-Disposition', 'attachment; filename=' . $filename);
+        $response->send();
+        return new Response($content);
+    }
+     /**
+     *
+     * @Route("/export/wednesday",name="exportwed")
+     *      
+     */
+    public function exportwedAction() {
+        $format = 'xls';
+        $filename = sprintf('export_students_wednesday.%s', $format);
+        $data = array();
+        $em = $this->getDoctrine()->getEntityManager();
+        $query = $em->createQuery('SELECT s FROM Events\Bundle\EventsBundle\Entity\Subscribed s');
+        $data = $query->getResult();
+        $content = $this->renderView('EventsEventsBundle:Default:wednesday.html.twig', array('data' => $data));
+        $response = new Response($content);
+        $response->headers->set('Content-Type', 'application/vnd.ms-excel');
+        $response->headers->set('Content-Disposition', 'attachment; filename=' . $filename);
+        $response->send();
+        return new Response($content);
+    }
+    /**
+     *
+     * @Route("/export/thursday",name="exportthu")
+     *      
+     */
+//    public function exportAction() {
+//        $format = 'xls';
+//        $filename = sprintf('export_students_wednesday.%s', $format);
+//        $data = array();
+//        $em = $this->getDoctrine()->getEntityManager();
+//        $query = $em->createQuery('SELECT s FROM Events\Bundle\EventsBundle\Entity\Subscribed s');
+//        $data = $query->getResult();
+//        $content = $this->renderView('EventsEventsBundle:Default:wednesday.html.twig', array('data' => $data));
+//        $response = new Response($content);
+//        $response->headers->set('Content-Type', 'application/vnd.ms-excel');
+//        $response->headers->set('Content-Disposition', 'attachment; filename=' . $filename);
+//        $response->send();
+//        return new Response($content);
+//    }
 
 }
