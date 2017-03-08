@@ -588,7 +588,7 @@ class DefaultController extends Controller {
      */
     public function exporttueAction() {
         $format = 'xls';
-        $filename = sprintf('export_students_prep1_tuesday.%s', $format);
+        $filename = sprintf('export_students_ing2_tuesday.%s', $format);
         $data = array();
         $em = $this->getDoctrine()->getEntityManager();
         $query = $em->createQuery('SELECT s FROM Events\Bundle\EventsBundle\Entity\Subscribed s');
@@ -606,7 +606,7 @@ class DefaultController extends Controller {
      */
     public function exportwedAction() {
         $format = 'xls';
-        $filename = sprintf('export_students_prep1_wednesday.%s', $format);
+        $filename = sprintf('export_students_ing2_wednesday.%s', $format);
         $data = array();
         $em = $this->getDoctrine()->getEntityManager();
         $query = $em->createQuery('SELECT s FROM Events\Bundle\EventsBundle\Entity\Subscribed s');
@@ -624,7 +624,7 @@ class DefaultController extends Controller {
      */
     public function exportthuAction() {
         $format = 'xls';
-        $filename = sprintf('export_students_prep1_thursday.%s', $format);
+        $filename = sprintf('export_students_ing2_thursday.%s', $format);
         $data = array();
         $em = $this->getDoctrine()->getEntityManager();
         $query = $em->createQuery('SELECT s FROM Events\Bundle\EventsBundle\Entity\Subscribed s');
