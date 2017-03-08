@@ -581,24 +581,23 @@ class DefaultController extends Controller {
     }
     
     
-    /**
+   /**
      *
      * @Route("/export/tuesday",name="exporttue")
      *      
      */
     public function exporttueAction() {
         $format = 'xls';
-        $filename = sprintf('export_students_tuesday.%s', $format);
+        $filename = sprintf('export_students_prep1_tuesday.%s', $format);
         $data = array();
         $em = $this->getDoctrine()->getEntityManager();
         $query = $em->createQuery('SELECT s FROM Events\Bundle\EventsBundle\Entity\Subscribed s');
         $data = $query->getResult();
         $content = $this->renderView('EventsEventsBundle:Default:tuesday.html.twig', array('data' => $data));
         $response = new Response($content);
-        $response->headers->set('Content-Type', 'application/vnd.ms-excel');
+        $response->headers->set('Content-Type', 'application/vnd.ms-excel; charset=utf-8');
         $response->headers->set('Content-Disposition', 'attachment; filename=' . $filename);
-        $response->send();
-        return new Response($content);
+        return $response;
     }
      /**
      *
@@ -607,17 +606,16 @@ class DefaultController extends Controller {
      */
     public function exportwedAction() {
         $format = 'xls';
-        $filename = sprintf('export_students_wednesday.%s', $format);
+        $filename = sprintf('export_students_prep1_wednesday.%s', $format);
         $data = array();
         $em = $this->getDoctrine()->getEntityManager();
         $query = $em->createQuery('SELECT s FROM Events\Bundle\EventsBundle\Entity\Subscribed s');
         $data = $query->getResult();
         $content = $this->renderView('EventsEventsBundle:Default:wednesday.html.twig', array('data' => $data));
         $response = new Response($content);
-        $response->headers->set('Content-Type', 'application/vnd.ms-excel');
+        $response->headers->set('Content-Type', 'application/vnd.ms-excel; charset=utf-8');
         $response->headers->set('Content-Disposition', 'attachment; filename=' . $filename);
-        $response->send();
-        return new Response($content);
+        return $response;
     }
     /**
      *
@@ -626,17 +624,15 @@ class DefaultController extends Controller {
      */
     public function exportthuAction() {
         $format = 'xls';
-        $filename = sprintf('export_students_thursday.%s', $format);
+        $filename = sprintf('export_students_prep1_thursday.%s', $format);
         $data = array();
         $em = $this->getDoctrine()->getEntityManager();
         $query = $em->createQuery('SELECT s FROM Events\Bundle\EventsBundle\Entity\Subscribed s');
         $data = $query->getResult();
         $content = $this->renderView('EventsEventsBundle:Default:thursday.html.twig', array('data' => $data));
         $response = new Response($content);
-        $response->headers->set('Content-Type', 'application/vnd.ms-excel');
+        $response->headers->set('Content-Type', 'application/vnd.ms-excel; charset=utf-8');
         $response->headers->set('Content-Disposition', 'attachment; filename=' . $filename);
-        $response->send();
-        return new Response($content);
+        return $response;
     }
-
 }

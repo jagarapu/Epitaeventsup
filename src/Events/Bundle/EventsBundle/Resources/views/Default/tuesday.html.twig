@@ -1,5 +1,6 @@
 FirstName|LastName|Epita Login |Email|Tuesday(9 am - 10:30am)|Tuesday(11am - 12:30pm)|Tuesday(12:30pm  - 1:30 pm)|Tuesday(1:30 pm - 2:30 pm)|Tuesday(3pm-4pm)<br>
 {% for row in data %}
-{{row.user.firstname}} | {{row.user.lastname}} | {{row.user.username }} | {{row.user.email}} | {% if row.eventtype1.id == 1 %} {{ row.eventtype1.description }} {% else %} None {% endif %} | {% if row.eventtype1.id == 2 %} {{ row.eventtype1.description }} {% else %} None {% endif %} | 
-{% if row.eventtype2.id == 3 %} {{ row.eventtype2.description }} {% else %} None {% endif %} | {% if row.eventtype2.id == 4 %} {{ row.eventtype2.description }} {% else %} None {% endif %}| {% if row.eventtype3.id is null %} none {% else %} {{ row.eventtype3.description }} {% endif %} |<br>
+{% autoescape %}
+{{row.user.firstname}} | {{row.user.lastname}} | {{row.user.username }} | {{row.user.email}} | {% if row.eventtype1.id == 1 %} {{ row.eventtype1.description| raw }} {% else %} None {% endif %} | {% if row.eventtype1.id == 2 %} {{ row.eventtype1.description| raw }} {% else %} None {% endif %} | {% if row.eventtype2.id == 3 %} {{ row.eventtype2.description| raw }} {% else %} None {% endif %} | {% if row.eventtype2.id == 4 %} {{ row.eventtype2.description| raw }} {% else %} None {% endif %}| {% if row.eventtype3.id is null %} none {% else %} {{ row.eventtype3.description| raw }} {% endif %} |<br>
+{% endautoescape %}
 {% endfor %}

@@ -1,8 +1,6 @@
-FirstName|LastName|Epita Login |Email|Thursday(10:30am – 12:00pm)|Thursday(2 :30pm – 4 :00pm)|Thursday (3:00pm – 4 :00pm)|Thursday(3:00pm – 4 :00pm)|Thursday(4 :00pm – 5 :30pm)|Thursday(4:00pm - 5:00pm)|Thursday(4:00 - 5:00)<br>
+FirstName|LastName|Epita Login |Email|Thursday(10:30am - 12:00pm)|Thursday(2:30pm - 4:00pm)|Thursday (3:00pm - 4:00pm)|Thursday(4:00pm - 5:00pm)|Thursday(4:00pm - 5:30pm)<br>
 {% for row in data %}
-{{row.user.firstname}} | {{row.user.lastname}} | {{row.user.username }} | {{row.user.email}} | {% if row.eventtype5.id == 17 %} {{ row.eventtype5.description }} {% else %} None {% endif %}|
-{% if row.eventtype5.id == 18 %} {{ row.eventtype5.description }} {% else %} None {% endif %} | {% if row.eventtype6.id == 19 %} {{ row.eventtype6.description }} {% else %} None {% endif %} | 
-{% if row.eventtype6.id == 20 %} {{ row.eventtype6.description }} {% else %} None {% endif %} | {% if row.eventtype6.id == 21 %} {{ row.eventtype6.description }} {% else %} None {% endif %}| 
- {% if row.eventtype7.id == 22 %} {{ row.eventtype7.description }} {% else %} None {% endif %} | {% if row.eventtype7.id == 23 %} {{ row.eventtype7.description }} {% else %} None {% endif %}
- | {% if row.eventtype7.id == 24 %} {{ row.eventtype7.description }} {% else %} None {% endif %}<br>
+{% autoescape %}     
+{{row.user.firstname}} | {{row.user.lastname}} | {{row.user.username }} | {{row.user.email }}| {% if row.eventtype5 is null %} None {% else %} {{ row.eventtype5.description| raw }} {% endif %} |{% if row.eventtype6 is null %} None {% elseif row.eventtype6.id == 19 %} {{ row.eventtype6.description| raw }} {% endif %}  |{% if row.eventtype6 is null %} None {% elseif row.eventtype6.id == 20 or row.eventtype6.id == 21 %} {{ row.eventtype6.description| raw }} {% endif %} |{% if row.eventtype7 is null %} None {% elseif row.eventtype7.id == 23 or row.eventtype7.id == 24 %} {{ row.eventtype7.description| raw }} {% endif %} |{% if row.eventtype7 is null %} None {% elseif row.eventtype7.id == 22 %} {{ row.eventtype7.description| raw }} {% endif %}
+{% endautoescape %}
 {% endfor %}
