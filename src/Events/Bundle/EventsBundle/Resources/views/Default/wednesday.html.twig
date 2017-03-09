@@ -1,6 +1,6 @@
-FirstName|LastName|Epita Login |Email|Wednesday(9 am - 6 pm)<br>
+FirstName|LastName|Epita Login |Email|Wednesday(9am - 6pm)<br>
 {% for row in data %}
-{% autoescape %}    
-{{row.user.firstname}}|{{row.user.lastname}}|{{row.user.username }}|{{row.user.email}}|{% if row.eventtype4 is null %}None{% else %}{{ row.eventtype4.description| raw }}{% endif %}
+{% autoescape %}
+{{row.user.firstname}}|{{row.user.lastname}}|{{row.user.username }}|{{row.user.email}}|{% if row.eventtype4 is null %}None{% else %}{{ row.eventtype4.description| raw }}{% endif %}|
 {% endautoescape %}
 {% endfor %}
