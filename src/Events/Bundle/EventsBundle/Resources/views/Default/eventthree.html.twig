@@ -1,77 +1,71 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        <meta charset="UTF-8" />
-        <title>{% block title %}Events for Thursday(16th March 2017) ONLY FOR Engineering 2 Students.{% endblock %}</title>
-        {% block stylesheets %}
-        <link href="{{ asset('bundles/eventsevents/css/style.css') }}" type="text/css" rel="stylesheet"/>
-        {% endblock %}
-        <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
-    </head>
-    <body>
-        {% block body %}
-            <p>Logged in as <b>{{ app.user.username }}</b>({{app.user.email}})<a style="padding-left: 50px;" href="{{path('fos_user_security_logout')}}">Logout</a></p>
-              <div id="main">
+{% extends 'EventsEventsBundle::layout.html.twig' %}
+{% form_theme form 'EventsEventsBundle:Form:fields.html.twig' %}
+
+{% block stylesheets %}   
+ {{parent()}}
+ <link href="{{ asset('bundles/eventsevents/css/style.css') }}" type="text/css" rel="stylesheet"/>
+ <link href="{{ asset('bundles/eventsevents/css/stylehome.css') }}" type="text/css" rel="stylesheet" />
+{% endblock %}
+ 
+{% block title %}Events for Friday(13th April 2018) ONLY FOR Engineering 2 Students.{% endblock %}
+
 {% block content %}
-    <p>Please register for the events to be held on <b>Thursday(16th March 2017)</b></p>
-    <ul>
-        <li>You must choose to attend the three events held during the day.</li>
-    </ul>
-    {% for flashMessage in app.session.flashbag.get('error') %}        
-    <div class="flash-error">
-        {{ flashMessage }}
-    </div>
-    {% endfor %}
-    <div class="candidatecontent">            
-    <div id="form">                         
-     <br>
-     <form action="{{ path('eventthree') }}" method="post" {{ form_enctype(form) }} name="eventthree">
-            <table>       
-                    {# Event type 5 #}
-                    <tr>
-                        <td><div class="formlabelregister"><b>{{ form_label(form.eventtype5) }}</b></div></td>
-                        <td>{{ form_widget(form.eventtype5) }}</td>
-                        <td><span class="errors">{{ form_errors(form.eventtype5) }}</span></td>
-                    </tr>                   
-                    <tr></tr>
-                    <tr></tr>
-                    <tr></tr>
-                    <tr></tr>  
-                    {# Event type 6 #}
-                   <tr>
-                        <td><div class="formlabelregister"><b>{{ form_label(form.eventtype6) }}</b></div></td>
-                        <td>{{ form_widget(form.eventtype6) }}</td>
-                        <td><span class="errors">{{ form_errors(form.eventtype6) }}</span></td>
-                    </tr>                   
-                    <tr></tr>
-                    <tr></tr>
-                    <tr></tr>
-                    <tr></tr> 
-                    {# Event type 7 #}
-                    <tr>
-                        <td><div class="formlabelregister"><b>{{ form_label(form.eventtype7) }}</b></div></td>
-                        <td>{{ form_widget(form.eventtype7) }}</td>
-                        <td><span class="errors">{{ form_errors(form.eventtype7) }}</span></td>
-                    </tr>                   
-                    <tr></tr>
-                    <tr></tr>
-                    <tr></tr>
-                    <tr></tr>  
-            </table>            
-            <table>
-                <tbody>
-                    <tr>
-                        <td style="padding-left: 50px;padding-top: 10px;"><input type="submit" value="Submit" id="submit"></td>
-                    </tr>
-                </tbody>
-            </table>
-            
-{{ form_end(form) }}            
-            </div>         
-             </div>
-            {% endblock content %}   
-            </div>
+        <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
+        <div class="container">
+            <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
+            <fieldset class="scheduler-border">                      
+                <legend class="scheduler-border">  <h3>  
+                        <p>Logged in as <b>{{ app.user.username }}</b>({{app.user.email}})<a style="padding-left: 50px;" href="{{path('fos_user_security_logout')}}">Logout</a></p>
+                    </h3>
+                </legend>
+                <div id="main">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <p>Please register for the events to be held on <b>Friday(13th April 2018)</b></p>
+                            <ul>
+                                <li>You must choose to attend the two events held during the day.</li>
+                            </ul>
+                        </div>
+                    </div>    
+                    {% for flashMessage in app.session.flashbag.get('error') %}        
+                        <div class="flash-error">
+                            {{ flashMessage }}
+                        </div>
+                    {% endfor %}
+                    <div class="candidatecontent">            
+                        <div id="form">                         
+                            <br> 
+                            <form action="{{ path('eventthree') }}" method="post" {{ form_enctype(form) }} name="eventthree">
+
+                                {# Event type 5 #}
+                                <div class="row">
+                                    <div class="col-sm-3 formlabelregister">{{ form_label(form.eventtype5) }}</div>
+                                    <div class="col-sm-6">{{ form_widget(form.eventtype5) }}</div>
+                                    <div class="col-sm-3 errors">{{ form_errors(form.eventtype5) }}</div>
+                                </div>
+
+                                {# Event type 6 #}
+                                <div class="row">
+                                    <div class="col-sm-3 formlabelregister">{{ form_label(form.eventtype6) }}</div>
+                                    <div class="col-sm-6">{{ form_widget(form.eventtype6) }}</div>
+                                    <div class="col-sm-3 errors">{{ form_errors(form.eventtype6) }}</div>
+                                </div>
+
+                                {# Event type 7 #}
+                                {#<div class="row">
+                                        <div class="col-sm-2 formlabelregister">{{ form_label(form.eventtype7) }}</div>
+                                        <div class="col-sm-5">{{ form_widget(form.eventtype7) }}</div>
+                                        <div class="col-sm-5 errors">{{ form_errors(form.eventtype7) }}</div>
+                                </div>#}
+                                <div class="row">
+                                    <div class="col-sm-offset-2 col-sm-2"><input type="submit" class="btn btn-success" value="Submit" id="submit"/></div>      
+                                </div>       
+
+                                {{ form_end(form) }}            
+                        </div>         
+                    </div>
+                </div>
+            </fieldset>
+        </div>
         {% endblock %}
-        {% block javascripts %}{% endblock %}
-    </body>
-</html>
+{% block javascripts %}{% endblock %}

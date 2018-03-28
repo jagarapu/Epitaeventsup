@@ -1,0 +1,13 @@
+## YAML Template.
+---
+services:
+    sonata.admin.course:
+        class: Events\Bundle\EventsBundle\Admin\EventsAdmin
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: "Content", label: "Events" }
+        arguments:
+            - ~
+            - Events\Bundle\EventsBundle\Entity\Subscribed
+            - ~
+        calls:
+            - [ setTranslationDomain, [EventsEventsBundle]]

@@ -1,8 +1,12 @@
+{% extends 'EventsEventsBundle::layout.html.twig' %}
 {% form_theme form 'EventsEventsBundle:Form:form_detail_div_layout.html.twig' %}
- 
-{% block title %}<b>EPITA International Week 2017 Registration Form  for Engineering 2 students!!!</b>{% endblock %}
-{% block stylesheets %}    
+
+{% block stylesheets %}   
+ {{parent()}}
+ <link href="{{ asset('bundles/eventsevents/css/stylehome.css') }}" type="text/css" rel="stylesheet" />
 {% endblock %}
+  
+{% block title %}EPITA International Week 2018 Registration Form  for Engineering 4th Year Students!!!{% endblock %}
 
 {% block body %}
     <div id="main">
@@ -10,60 +14,76 @@
     <div class="candidatecontent">            
     <div id="form">                         
      <br>
-    <form action="{{ path('register') }}" method="post" {{ form_enctype(form) }} name="user">
-        <table>       
+     <div class="container">
+         <style>
+             .errors{
+                 color:red;
+             }   
+         </style>    
+    <form action="{{ path('register') }}" method="post" {{ form_enctype(form) }} name="user">       
+        <fieldset class="scheduler-border">
+            <legend class="scheduler-border">  <h3> Registration&nbsp;Form</h3></legend>       
+                <br>       
                     {# Name #}
-                    <tr>
-                        <td><div class="formlabelregister">{{ form_label(form.firstname) }}</div></td>
-                        <td>{{ form_widget(form.firstname) }}</td>
-                        <td><span class="errors">{{ form_errors(form.firstname) }}</span></td>
-                    </tr>
-                    <tr>
-                        <td><div class="formlabelregister">{{ form_label(form.lastname) }}</div></td>
-                        <td>{{ form_widget(form.lastname) }}</td>
-                        <td><span class="errors">{{ form_errors(form.lastname) }}</span></td>
-                    </tr>
+                    <div class="row">
+                        <div class="col-sm-2 formlabelregister">{{ form_label(form.firstname) }}</div>
+                        <div class="col-sm-3">{{ form_widget(form.firstname) }}</div>
+                        <div class="col-sm-4 errors">{{ form_errors(form.firstname) }}</div>
+                    </div>
+                    <br>
+                    <div class="row">
+                        <div class="col-sm-2 formlabelregister">{{ form_label(form.lastname) }}</div>
+                        <div class="col-sm-3">{{ form_widget(form.lastname) }}</div>
+                        <div class="col-sm-4 errors">{{ form_errors(form.lastname) }}</div>
+                    </div>                    
+                    <br>
                     {# Username #}
-                    <tr>
-                        <td><div class="formlabelregister">{{ form_label(form.username)}}</div></td>
-                        <td>{{ form_widget(form.username,{'help': 'Should not contain special characters'}) }}</td>
-                        <td><span class="errors">{{form_errors(form.username)}}</span></td>
-                    </tr>
+                    <div class="row">
+                        <div class="col-sm-2 formlabelregister">{{ form_label(form.username) }}</div>
+                        <div class="col-sm-3">{{ form_widget(form.username,{'help': 'Should not contain special characters'}) }}</div>  
+                        <div class="col-sm-4 errors">{{ form_errors(form.username) }}</div>
+                    </div> 
+                    <br>
+                    
                     {# Email #}
-                    <tr>
-                        <td><div class="formlabelregister">{{form_label(form.email)}}</div></td>
-                        <td>{{ form_widget(form.email,{'help' : 'In case we need to communicate'}) }}</td>
-                        <td><span class="errors">{{form_errors(form.email)}}</span></td>
-                    </tr>                    
+                    <div class="row">     
+                        <div class="col-sm-2 formlabelregister">{{ form_label(form.email) }}</div>
+                        <div class="col-sm-3">{{ form_widget(form.email,{'help' : 'In case we need to communicate'}) }}</div>
+                        <div class="col-sm-4 errors">{{ form_errors(form.email) }}</div>
+                    </div>  
+                    <br>
                     {# Password #}
-                    <tr>
-                        <td><div class="formlabelregister">{{ form_label(form.plainPassword.first) }}</div></td>
-                        <td>{{ form_widget(form.plainPassword.first,{'help' : 'Atleast four characters long'}) }}</td>
-                        <td><span class="errors">{{form_errors(form.plainPassword.first)}}</span></td>
-                    </tr>
+                    <div class="row">
+                        <div class="col-sm-2 formlabelregister">{{ form_label(form.plainPassword.first) }}</div>
+                        <div class="col-sm-3">{{ form_widget(form.plainPassword.first,{'help' : 'Atleast four characters long'}) }}</div>
+                        <div class="col-sm-4 errors">{{ form_errors(form.plainPassword.first) }}</div>
+                    </div>  
+                    <br>
                     {# Confirm Password #}
-                    <tr>
-                        <td><div class="formlabelregister">{{ form_label(form.plainPassword.second) }}</div></td>
-                        <td>{{ form_widget(form.plainPassword.second) }}</td>
-                        <td><span class="errors">{{form_errors(form.plainPassword.second)}}</span></td>
-                    </tr>                    
-            </table>            
-            <table>
-                <tbody>
-                    <tr>
-                        <td style="padding-left: 50px;padding-top: 10px;"><input type="submit" value="Register Me" id="submit"></td>
-                    </tr>
-                </tbody>
-            </table>
-            
-{{ form_end(form) }}            
+                    <div class="row">
+                        <div class="col-sm-2 formlabelregister">{{ form_label(form.plainPassword.second) }}</div>
+                        <div class="col-sm-3">{{ form_widget(form.plainPassword.second) }}</div>
+                        <div class="col-sm-4 errors">{{ form_errors(form.plainPassword.second) }}</div>
+                    </div> 
+                    <br>                                      
+                    <div class="row">
+                        <div class="col-sm-offset-2 col-sm-2"><input type="submit" class="btn btn-success" value="Register Me" id="submit"/></div>      
+                    </div>
+                    <br>
+                    <div class="row">
+                        <div class="col-sm-offset-2">
+                         &nbsp;&nbsp;&nbsp;&nbsp;Already registered ? <a href="{{path('events_security_login')}}">Login here</a>   
+                        </div>      
+                    </div>   
+                     </fieldset>    
+            </div>                                                    
+{{ form_end(form) }}
             </div>         
-             </div>
-            <p>Already registered ? <a href="{{path('events_security_login')}}">Login here</a></p>
-            {% endblock content %}   
             </div>
+     </div>           
+            {% endblock content %}   
+           
 {% endblock  body %}  
-        
-            
-{% block javascripts %}
+                   
+{% block javascripts %}   
 {% endblock %}

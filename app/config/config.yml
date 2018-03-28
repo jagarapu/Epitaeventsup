@@ -1,10 +1,11 @@
 imports:
     - { resource: parameters.yml }
     - { resource: security.yml }
-
+    - { resource: "@EventsEventsBundle/Resources/config/admin.yml"}
+        
 framework:
     #esi:             ~
-    #translator:      { fallback: "%locale%" }
+    translator:      { fallback: "%locale%" }
     secret:          "%secret%"
     router:
         resource: "%kernel.root_dir%/config/routing.yml"
@@ -78,12 +79,31 @@ swiftmailer:
     username:  "%mailer_user%"
     password:  "%mailer_password%"
     spool:     { type: memory }
+
+sonata_block:
+    default_contexts: [cms]
+    blocks:
+        # enable the SonataAdminBundle block
+        sonata.admin.block.admin_list:
+            contexts: [admin]
+sonata_admin:
+    title:      EPITA Events
+    title_logo: bundles/eventsevents/img/logo.png
     
 parameters:
-    max_cultural1 : 125 
-    max_cultural2 : 125
-    max_cultural3 : 35
-    max_cultural4 : 50
-    max_cultural5 : 110
-    max_vie_cv : 100
-    max_dual : 60
+    max_cultural1 : 135 
+    max_cultural2 : 45
+    max_cultural3 : 135
+    max_cultural4 : 38
+    max_cultural5 : 90
+    max_vie_cv : 90
+    
+    
+#    max_dual : 24
+   # testing
+#    max_cultural1 : 2 
+#    max_cultural2 : 2
+#    max_cultural3 : 2
+#    max_cultural4 : 2
+#    max_cultural5 : 2
+#    max_vie_cv : 2

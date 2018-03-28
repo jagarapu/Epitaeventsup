@@ -45,39 +45,38 @@ class EventthreeType extends AbstractType {
        }
         //Eventtype5
         $builder->add('eventtype5','choice',array(
-            'choices' => array('17' => 'L’interculturalité sans risques (10:30am - 12pm)', 
-                               '18' => "Le CV à l’international (10:30am - 12pm)",
+            'choices' => array('18' => "Doing business in the countries of V4 & EU (09:30 am – 11:00 am)",
+                               '19' => 'Travailler aux/avec les USA (09:30 am – 11:00 am)', 
+                               '20' => 'L’interculturalité sans risque (09:30 am – 11:00 am)',
                 ),
             'expanded' => true,
             'multiple' => false,
-            'label' => 'Thursday, 16th March Event 1',
+            'label' => 'Event 1 (Friday, 13th April)',
             'required' => false,
             'data' => $eventtype5,
         ));
         //Eventtype6
         $builder->add('eventtype6','choice',array(
-            'choices' => array('19' => 'VIE – Business France (2 :30pm – 4pm)', 
-                               '20' => 'Dual Degree Stevens (3pm – 4pm)',
-                               '21' => 'Double diplôme / semestre UQAC (3pm – 4pm)',
+            'choices' => array('21' => 'Intégration professionnelle dans un monde globalisé (11:00 am – 12:30 am)',
+                               '22' => 'Travailler en/avec la Chine (11:00 am – 12:30 am)', 
+                               '23' => 'Le CV à l’international (11:00 am – 12:30 am)',
                 ),
             'expanded' => true,
             'multiple' => false,
-            'label' => 'Thursday, 16th March Event 2',
+            'label' => 'Event 1 (Friday, 13th April)',
             'required' => false,
             'data' => $eventtype6,
         ));
         //Eventtype7
-        $builder->add('eventtype7','choice',array(
-            'choices' => array('22' => 'Le Project Management à l’international (4pm – 5:30pm) ', 
-                               '23' => 'Dual Degree Griffith (4pm – 5pm)',
-                               '24' => 'Dual Degree Boston (4pm – 5pm) ',
-                ),
-            'expanded' => true,
-            'multiple' => false,
-            'label' => 'Thursday, 16th March Event 3',
-            'required' => false,
-            'data' => $eventtype7,
-        ));
+//        $builder->add('eventtype7','choice',array(
+//            'choices' => array('24' => 'Atelier relecture de CV (02:00 am – 06:00 am)',
+//                ),
+//            'expanded' => true,
+//            'multiple' => false,
+//            'label' => 'Friday, 13th April Event 3',
+//            'required' => false,
+//            'data' => $eventtype7,
+//        ));
  }
 
     public function getDefaultOptions(array $options) {

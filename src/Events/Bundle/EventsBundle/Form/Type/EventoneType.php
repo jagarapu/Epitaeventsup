@@ -34,56 +34,36 @@ class EventoneType extends AbstractType {
            else {
                $eventtype2 = $this->subscribed->getEventtype2()->getId();
            }
-           if($this->subscribed->getEventtype3() == null){
-                $eventtype3 = '';   
-           }
-           else {
-               $eventtype3 = $this->subscribed->getEventtype3()->getId();
-           }
-       }
+       } 
        else {
            $eventtype1 = '';
            $eventtype2 = '';
-           $eventtype3 = '';
        }
        //Eventtype1
        $builder->add('eventtype1','choice',array(
-            'choices' => array('1' => 'Expatriation & Intercultural Management 1 (9:00am – 10:30am)', 
-                               '2' => 'Expatriation & Intercultural Management 2 (11:00am – 12:30pm)'
+            'choices' => array('1' => 'Speed friending & quizz 1 (10:00 am – 11:30 am)', 
+                               '2' => 'Speed friending & quizz 2 (11:30 am – 01:00 pm)'
                 ),
             'expanded' => true,
             'multiple' => false,
-            'label' => 'Event 1',
+            'label' => 'Event 1 (Wednesday, 11th April)',
             'required' => false,
             'data' => $eventtype1,
         ));
        //Eventtype2
         $builder->add('eventtype2','choice',array(
-            'choices' => array('3' => 'Food tasting 1 (12:30pm - 1:30pm)', 
-                               '4' => 'Food tasting 2 (1:30pm - 2:30pm)'
+            'choices' => array('3' => 'Discovering crypto currencies (02:00 pm - 04:30 pm)', 
+                               '4' => 'New - York under attack (02:00 pm - 04:30 pm)',
+                               '5' => 'Web Analytics (02:00 pm – 04:30 pm)', 
+                               '6' => 'Innovative adverts (02:00 pm – 04:30 pm)',
+                               '7' => 'How does an IPO work (02:00 pm – 04:30 pm)',
+                               '8' => 'Industry 4.0 (02:00 pm – 04:30 pm)',
                 ),
             'expanded' => true,
             'multiple' => false,
-            'label' => 'Event 2',
+            'label' => 'Event 2 (Wednesday, 11th April)',
             'required' => false,            
             'data' =>  $eventtype2,
-        ));
-        
-       //Eventtype3
-        $builder->add('eventtype3','choice',array(
-            'choices' => array('5' => 'Holi (3:00pm – 4:00pm)', 
-                               '6' => 'Kabaddi (3:00pm – 4:00pm)',
-                               '7' => 'Bollywood (3:00pm – 4:00pm)',
-                               '8' => 'African Dance (3:00pm – 4:00pm)',
-                               '9' => 'Cricket (3:00pm – 4:00pm)',
-                               '10' => 'Dabke (3:00pm – 4:00pm)',
-                               '11' => 'Eggs painting (3:00pm – 4:00pm)',
-                ),
-            'expanded' => true,
-            'multiple' => false,
-            'label' => 'Event 3',
-            'required' => false,
-            'data' => $eventtype3,
         ));
          
  }

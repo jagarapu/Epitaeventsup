@@ -91,7 +91,7 @@ class Subscribed {
      * 
      */
     private $user;
-
+    
     public function getEventtype1() {
         return $this->eventtype1;
     }

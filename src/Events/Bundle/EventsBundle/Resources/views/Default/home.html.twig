@@ -1,26 +1,38 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        <meta charset="UTF-8" />
-        <title>{% block title %}EPITA International Week - 2017 FOR ENGINEERING 2 STUDENTS{% endblock %}</title>
-        {% block stylesheets %}
-        <link href="{{ asset('bundles/eventsevents/css/style.css') }}" type="text/css" rel="stylesheet"/>
-        {% endblock %}
-        <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
-    </head>
-    <body>
-         {% block body %}            
-            <p>Logged in as <b>{{ app.user.username }}</b>({{app.user.email}})<a style="padding-left: 50px;" href="{{path('fos_user_security_logout')}}">Logout</a></p>            
-            <p><b>EPITA International Week - 2017 Events Registration ONLY FOR ENGINEERING 2 STUDENTS</b></p> 
-                {% for flashMessage in app.session.flashbag.get('success') %}        
-                    <div class="flash-success">
-                        {{ flashMessage }}
-                     </div>
-                {% endfor %}
-            <p><b>Register for events held on Tuesday, 14th March 2017</b>&nbsp;<a href="{{path('eventone')}}">Click here!</a></p>
-            <p><b>Register for events held on Wednesday, 15th March 2017</b>&nbsp;<a href="{{path('eventtwo')}}">Click here!</a></p>
-            <p><b>Register for events held on Thursday, 16th March 2017</b>&nbsp;<a href="{{path('eventthree')}}">Click here!</a></p>
-        {% endblock %}
-        {% block javascripts %}{% endblock %}
-    </body>
-</html>
+{% extends 'EventsEventsBundle::layout.html.twig' %}
+
+{% block stylesheets %}   
+ {{parent()}}
+ <link href="{{ asset('bundles/eventsevents/css/stylehome.css') }}" type="text/css" rel="stylesheet" />
+ <link href="{{ asset('bundles/eventsevents/css/style.css') }}" type="text/css" rel="stylesheet"/>
+{% endblock %}
+{% block content %} 
+    <br>
+    <div class="container">        
+        <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />            
+        <fieldset class="scheduler-border">
+            <legend class="scheduler-border"> 
+                <p>Logged in as <b>{{ app.user.username }}</b>({{app.user.email}})<a style="padding-left: 50px;" href="{{path('fos_user_security_logout')}}">Logout</a></p> 
+            </legend>  
+            <div class="row">
+                <div class="col-sm-12">
+                    <h4><b>EPITA International Week - 2018 Events Registration ONLY FOR ENGINEERING 4th YEAR STUDENTS</b></h4> 
+                </div>
+            </div>
+            <br>
+            {% for flashMessage in app.session.flashbag.get('success') %}        
+                <div class="flash-success">
+                    {{ flashMessage }}
+                </div>
+            {% endfor %}
+            <div class="row">
+                <div class="col-sm-12">    
+                    <p><b>Register for events held on Wednesday, 11th April 2018</b>&nbsp;<a href="{{path('eventone')}}">Click here!</a></p><br>
+                    <p><b>Register for events held on Thursday, 12th April 2018</b>&nbsp;<a href="{{path('eventtwo')}}">Click here!</a></p><br>
+                    <p><b>Register for events held on Friday, 13th April 2018</b>&nbsp;<a href="{{path('eventthree')}}">Click here!</a></p>  
+                </div>
+            </div>
+        </fieldset>
+    </div>  
+{% endblock %} 
+{% block javascripts %}
+{% endblock %}       

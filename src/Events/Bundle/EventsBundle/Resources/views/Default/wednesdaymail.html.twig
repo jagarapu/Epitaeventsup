@@ -1,8 +1,9 @@
 {% block body_html %}
 {{ 'Hello '}}{{app.user.username}}{{','}}<br>
-{{'Thank you for registering to the events of EPITA International Week. Your registered events for Wednesday, 15th March 2017 are listed below :'}}
+{{'Thank you for registering to the events of EPITA International Week. Your registered events for Wednesday, 13th April 2018 are listed below :'}}
 <ul>
-    <li>Wednesday, 15th March(9am - 6pm) : {% if row.eventtype4 is null %} None {% else %} {{ row.eventtype4.description }} {% endif %}</li>
+    <li>Wednesday, 11th April : {% if row.eventtype1 is null %} None {% else %} {{ row.eventtype1.description }} {% endif %}</li>
+    <li>Wednesday, 11th April: {% if row.eventtype2 is null %} None {% else %} {{ row.eventtype2.description }} {% endif %}</li>
 </ul>
 {{ 'Thank You' }},<br>
 {{' Epita International Team' }}

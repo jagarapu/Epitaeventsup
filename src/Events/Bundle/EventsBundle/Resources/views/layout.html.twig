@@ -1,0 +1,29 @@
+{% extends '::base.html.twig' %}
+
+{% block meta %}
+    <meta charset="UTF-8" /> 
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+{% endblock %}
+
+{% block stylesheets %}   
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/chosen/1.8.2/chosen.min.css"> 
+{% endblock %}
+  
+{% block body %}   
+<title>{% block title %}EPITA International Week - 2018{% endblock %}</title>
+{% block content %}         
+              
+{% endblock %}
+    
+{% block footer %}
+        <div style="margin: 50px 10px 50px 10px;" class="row footer">
+            <footer style="text-align: center" class="col-lg-12">copyright &copy; 2018 EPITA</footer>
+        </div> 
+{% endblock footer %}
+{% endblock %}
+
+{% block javascripts %}
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+{% endblock %}

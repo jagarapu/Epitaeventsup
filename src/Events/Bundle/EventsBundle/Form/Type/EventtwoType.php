@@ -20,9 +20,16 @@ class EventtwoType extends AbstractType {
     public function buildForm(FormBuilderInterface $builder, array $options) {
         
        if (!empty($this->subscribed)){
-
-           if($this->subscribed->getEventtype4() == null){
-                $eventtype4 = '';   
+           
+           if($this->subscribed->getEventtype3() == null){
+                $eventtype3 = '';   
+           }
+           else {
+               $eventtype3 = $this->subscribed->getEventtype3()->getId();
+           }
+           
+           if($this->subscribed->getEventtype4() == null){  
+               $eventtype4 = '';   
            }
            else {
                $eventtype4 = $this->subscribed->getEventtype4()->getId();
@@ -30,21 +37,36 @@ class EventtwoType extends AbstractType {
 
        }
        else {
-
+           $eventtype3 = '';
            $eventtype4 = '';
        }
   
-       //Eventtype4
-        $builder->add('eventtype4','choice',array(
-            'choices' => array('12' => 'Six Hats Challenge', 
-                               '13' => 'Shark Tank Challenge',
-                               '14' => 'Effective Project Management in a Hostile Multicultural Environment',
-                               '15' => 'Designing adverts with Cultural Dimensions in Mind',
-                               '16' => 'Implement a Factory in Africa',
+       //Eventtype3
+        $builder->add('eventtype3','choice',array(
+            'choices' => array('9' => 'Food tasting 1 (12:00 pm - 01:00 pm)',
+                               '10' => 'Food tasting 2 (01:00 pm - 02:00 pm)',
+                               
                 ),
             'expanded' => true,
             'multiple' => false,
-            'label' => 'Wednesday, 15th March (9:00am - 6:00pm)',
+            'label' => 'Event 1 (Thursday, 12th April)',
+            'required' => false,            
+            'data' =>  $eventtype3,
+        ));
+        
+       //Eventtype4
+        $builder->add('eventtype4','choice',array(
+            'choices' => array('11' => 'African Games (02:30 pm - 04:00 pm)',
+                               '12' => 'Chinese Cooking (dumplings) (02:30 pm - 04:00 pm)', 
+                               '13' => 'Indian Holi (02:30 pm - 04:00 pm)',
+                               '14' => 'Bollywood (02:30 pm - 04:00 pm)',
+                               '15' => 'Nepali Music (02:30 pm - 04:00 pm)',
+                               '16' => 'Eggs painting (02:30 pm - 04:00 pm)',
+                               '17' => 'Indian cricket (02:30 pm - 04:00 pm)',
+                ),
+            'expanded' => true,
+            'multiple' => false,
+            'label' => 'Event 2 (Thursday, 12th April)',
             'required' => false,
             'data' => $eventtype4,
         ));

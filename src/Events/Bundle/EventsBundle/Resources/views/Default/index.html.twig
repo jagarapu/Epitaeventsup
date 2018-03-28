@@ -1,18 +1,29 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        <meta charset="UTF-8" />
-        <title>{% block title %}EPITA International Week - 2017{% endblock %}</title>
-        {% block stylesheets %}{% endblock %}
-        <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
-    </head>
-    <body>
-        {% block body %}
-            <p><b>EPITA International Week - 2017 Registration Page  for Engineering 2 students!!!</b></p> 
-            <p>New User :&nbsp;<a href="{{ path('register') }}">Register here!</a></p>
-            <p>Already registered ? <a href="{{path('events_security_login')}}">Login here</a></p>
-            <p>Any questions : Write to us at epitaevents2017@gmail.com</p>
-        {% endblock %}
-        {% block javascripts %}{% endblock %}
-    </body>
-</html>
+{% extends 'EventsEventsBundle::layout.html.twig' %}
+
+{% block stylesheets %}   
+ {{parent()}}
+ <link href="{{ asset('bundles/eventsevents/css/stylehome.css') }}" type="text/css" rel="stylesheet" />
+{% endblock %}
+{% block title %}EPITA International Week - 2018{% endblock %}
+{% block content %} 
+            <br> 
+            <div class="container"> 
+                <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" /> 
+                <fieldset class="scheduler-border">
+                    <legend class="scheduler-border">                
+                        EPITA International Week - 2018 Registration Page  for Engineering 4th Year Students!!!              
+                    </legend>    
+
+                    <div class="row"> 
+                        <div class="col-sm-12 col-sm-offset-5">             
+                            <p>New User :&nbsp;<a href="{{ path('register') }}">Register here!</a></p>
+                            <p>Already registered ? <a href="{{path('events_security_login')}}">Login here</a></p>
+                            <p>Any questions : Write to us at epitaevents2018@gmail.com</p> 
+                        </div>
+                    </div>
+                </fieldset>    
+            </div>      
+{% endblock %}     
+
+{% block javascripts %}
+{% endblock %}   
