@@ -85,6 +85,9 @@ class DefaultController extends Controller {
 
         if (!$this->get('security.context')->isGranted('ROLE_USER')) {
             return $this->redirect($this->generateUrl('events_events_default_index'));
+        } 
+        if ($this->get('security.context')->isGranted('ROLE_ADMIN')) {
+            return $this->redirect($this->generateUrl('sonata_admin_dashboard'));
         }
         $user = $em->getRepository('EventsEventsBundle:User')->find($this->get('security.context')->getToken()->getUser()->getId());
 

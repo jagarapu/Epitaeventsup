@@ -41,14 +41,14 @@ class EventsAdmin extends Admin {
     protected function configureListFields(ListMapper $listMapper)
     {
         $listMapper
-            ->addIdentifier('eventtype1.description', 'string', array('label' => 'Event Type1'))
-            ->addIdentifier('eventtype2.description', 'string', array('label' => 'Event Type2'))
-            ->addIdentifier('eventtype3.description', 'string', array('label' => 'Event Type3'))
-            ->addIdentifier('user.username', 'string', array('label' => 'User'))
-            ->addIdentifier('user.email', 'string', array('label' => 'User Email'))    
-            ->addIdentifier('eventtype4.description', 'string', array('label' => 'Event Type4'))
-            ->addIdentifier('eventtype5.description', 'string', array('label' => 'Event Type5'))
-            ->addIdentifier('eventtype6.description', 'string', array('label' => 'Event Type6'))
+            ->add('eventtype1.description', 'string', array('label' => 'Event Type1'))
+            ->add('eventtype2.description', 'string', array('label' => 'Event Type2'))
+            ->add('eventtype3.description', 'string', array('label' => 'Event Type3'))
+            ->add('user.username', 'string', array('label' => 'User'))
+            ->add('user.email', 'string', array('label' => 'User Email'))    
+            ->add('eventtype4.description', 'string', array('label' => 'Event Type4'))
+            ->add('eventtype5.description', 'string', array('label' => 'Event Type5'))
+            ->add('eventtype6.description', 'string', array('label' => 'Event Type6'))
 //            ->addIdentifier('eventtype7.description', 'string', array('label' => 'Event Type7'))                   
         ;
     }

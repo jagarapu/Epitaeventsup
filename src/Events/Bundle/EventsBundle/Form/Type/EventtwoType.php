@@ -50,7 +50,7 @@ class EventtwoType extends AbstractType {
             'expanded' => true,
             'multiple' => false,
             'label' => 'Event 1 (Thursday, 12th April)',
-            'required' => false,            
+            'required' => true,            
             'data' =>  $eventtype3,
         ));
         
@@ -67,7 +67,7 @@ class EventtwoType extends AbstractType {
             'expanded' => true,
             'multiple' => false,
             'label' => 'Event 2 (Thursday, 12th April)',
-            'required' => false,
+            'required' => true,
             'data' => $eventtype4,
         ));
 

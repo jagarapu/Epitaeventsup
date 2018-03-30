@@ -52,7 +52,7 @@ class EventthreeType extends AbstractType {
             'expanded' => true,
             'multiple' => false,
             'label' => 'Event 1 (Friday, 13th April)',
-            'required' => false,
+            'required' => true,
             'data' => $eventtype5,
         ));
         //Eventtype6
@@ -64,7 +64,7 @@ class EventthreeType extends AbstractType {
             'expanded' => true,
             'multiple' => false,
             'label' => 'Event 1 (Friday, 13th April)',
-            'required' => false,
+            'required' => true,
             'data' => $eventtype6,
         ));
         //Eventtype7

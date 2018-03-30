@@ -91,12 +91,12 @@ sonata_admin:
     title_logo: bundles/eventsevents/img/logo.png
     
 parameters:
-    max_cultural1 : 135 
-    max_cultural2 : 45
-    max_cultural3 : 135
-    max_cultural4 : 38
-    max_cultural5 : 90
-    max_vie_cv : 90
+    max_cultural1 : 120 
+    max_cultural2 : 40
+    max_cultural3 : 120
+    max_cultural4 : 35
+    max_cultural5 : 80
+    max_vie_cv : 80
     
     
 #    max_dual : 24
