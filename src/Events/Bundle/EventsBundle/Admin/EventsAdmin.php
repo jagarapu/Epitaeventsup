@@ -7,6 +7,7 @@ use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Form\FormMapper;
 use Events\Bundle\EventsBundle\Entity\Subscribed;
+use Sonata\AdminBundle\Route\RouteCollection;
 //use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 
 class EventsAdmin extends Admin { 
@@ -66,4 +67,13 @@ class EventsAdmin extends Admin {
 //        $iterator->setEventtype1();
         return $iterator;
     }
+    
+    public function configureRoutes(RouteCollection $collection) {
+        
+        $collection ->remove('create')
+            ->remove('delete')
+            ->remove('edit')
+            ;
+    }
+
 }
