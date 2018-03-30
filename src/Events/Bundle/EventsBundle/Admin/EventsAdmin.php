@@ -41,11 +41,11 @@ class EventsAdmin extends Admin {
     protected function configureListFields(ListMapper $listMapper)
     {
         $listMapper
-            ->add('eventtype1.description', 'string', array('label' => 'Event Type1'))
-            ->add('eventtype2.description', 'string', array('label' => 'Event Type2'))
-            ->add('eventtype3.description', 'string', array('label' => 'Event Type3'))
             ->add('user.username', 'string', array('label' => 'User'))
             ->add('user.email', 'string', array('label' => 'User Email'))    
+            ->add('eventtype1.description', 'string', array('label' => 'Event Type1'))
+            ->add('eventtype2.description', 'string', array('label' => 'Event Type2'))
+            ->add('eventtype3.description', 'string', array('label' => 'Event Type3'))    
             ->add('eventtype4.description', 'string', array('label' => 'Event Type4'))
             ->add('eventtype5.description', 'string', array('label' => 'Event Type5'))
             ->add('eventtype6.description', 'string', array('label' => 'Event Type6'))
@@ -54,8 +54,8 @@ class EventsAdmin extends Admin {
     }
     
    public function getExportFields() {
-        return ['eventtype1.description', 'eventtype2.description', 'eventtype3.description',
-            'user.username','user.email','eventtype4.description','eventtype5.description','eventtype6.description'
+        return ['user.username','user.email','eventtype1.description', 'eventtype2.description', 'eventtype3.description',
+            'eventtype4.description','eventtype5.description','eventtype6.description'
             ];
     }
     
@@ -63,7 +63,7 @@ class EventsAdmin extends Admin {
     {
         $iterator = parent::getDataSourceIterator();
 //        $iterator->setDateTimeFormat('d/m/Y'); //change this to suit your needs
-        $iterator->setEventtype1();
+//        $iterator->setEventtype1();
         return $iterator;
     }
 }
