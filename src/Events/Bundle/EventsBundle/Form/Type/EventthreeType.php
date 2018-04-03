@@ -63,7 +63,7 @@ class EventthreeType extends AbstractType {
                 ),
             'expanded' => true,
             'multiple' => false,
-            'label' => 'Event 1 (Friday, 13th April)',
+            'label' => 'Event 2 (Friday, 13th April)',
             'required' => true,
             'data' => $eventtype6,
         ));
