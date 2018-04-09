@@ -106,9 +106,9 @@ class DefaultController extends Controller {
 
         $exists = false;
 
-        if (!$this->get('security.context')->isGranted('ROLE_USER')) {
+       // if (!$this->get('security.context')->isGranted('ROLE_USER')) {
             return $this->redirect($this->generateUrl('events_events_default_index'));
-        }
+        //}
         $em = $this->getDoctrine()->getManager();
         $user = $em->getRepository('EventsEventsBundle:User')->find($this->get('security.context')->getToken()->getUser()->getId());
 
@@ -239,9 +239,9 @@ class DefaultController extends Controller {
 
         $exists = false;
 
-        if (!$this->get('security.context')->isGranted('ROLE_USER')) {
+      //  if (!$this->get('security.context')->isGranted('ROLE_USER')) {
             return $this->redirect($this->generateUrl('events_events_default_index'));
-        }
+      //  }
         $em = $this->getDoctrine()->getManager();
         $user = $em->getRepository('EventsEventsBundle:User')->find($this->get('security.context')->getToken()->getUser()->getId());
 
@@ -371,9 +371,9 @@ class DefaultController extends Controller {
 
         $exists = false;
 
-        if (!$this->get('security.context')->isGranted('ROLE_USER')) {
+      //  if (!$this->get('security.context')->isGranted('ROLE_USER')) {
             return $this->redirect($this->generateUrl('events_events_default_index'));
-        }
+      //  }
         $em = $this->getDoctrine()->getManager();
         $user = $em->getRepository('EventsEventsBundle:User')->find($this->get('security.context')->getToken()->getUser()->getId());
 
