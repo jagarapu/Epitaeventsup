@@ -42,6 +42,8 @@ class EventsAdmin extends Admin {
     protected function configureListFields(ListMapper $listMapper)
     {
         $listMapper
+            ->add('user.firstname', 'string', array('label' => 'Firstname'))
+            ->add('user.lastname', 'string', array('label' => 'Lastname'))    
             ->add('user.username', 'string', array('label' => 'User'))
             ->add('user.email', 'string', array('label' => 'User Email'))    
             ->add('eventtype1.description', 'string', array('label' => 'Event Type1'))
@@ -55,7 +57,7 @@ class EventsAdmin extends Admin {
     }
     
    public function getExportFields() {
-        return ['user.username','user.email','eventtype1.description', 'eventtype2.description', 'eventtype3.description',
+        return ['user.firstname','user.lastname','user.username','user.email','eventtype1.description', 'eventtype2.description', 'eventtype3.description',
             'eventtype4.description','eventtype5.description','eventtype6.description'
             ];
     }
